@@ -106,12 +106,15 @@ export default function Hero() {
     });
   };
 
-  const maskStyle = {
-    WebkitMaskImage: `radial-gradient(circle ${maskSize}px at ${mousePos.x}px ${mousePos.y}px, transparent 0%, transparent 40%, black 72%)`,
-    maskImage: `radial-gradient(circle ${maskSize}px at ${mousePos.x}px ${mousePos.y}px, transparent 0%, transparent 40%, black 72%)`,
-    WebkitMaskRepeat: "no-repeat",
-    maskRepeat: "no-repeat",
-  };
+  // Only apply mask cutout when user is hovering/touching to unmask
+  const maskStyle = isHovered
+    ? {
+        WebkitMaskImage: `radial-gradient(circle ${maskSize}px at ${mousePos.x}px ${mousePos.y}px, transparent 0%, transparent 35%, black 65%, black 100%)`,
+        maskImage: `radial-gradient(circle ${maskSize}px at ${mousePos.x}px ${mousePos.y}px, transparent 0%, transparent 35%, black 65%, black 100%)`,
+        WebkitMaskRepeat: "no-repeat",
+        maskRepeat: "no-repeat",
+      }
+    : undefined;
 
   return (
     <div className="relative w-full flex flex-col bg-white overflow-hidden">
@@ -124,7 +127,8 @@ export default function Hero() {
         onMouseLeave={handleMouseLeave}
         onTouchStart={handleTouchStart}
         onTouchMove={handleTouchMove}
-        className="relative w-full min-h-[90vh] sm:min-h-[92vh] lg:min-h-screen overflow-hidden flex items-center cursor-crosshair pt-24 sm:pt-28 pb-12 sm:pb-16 px-4 sm:px-6 md:px-12 lg:px-20"
+        onTouchEnd={() => setIsHovered(false)}
+        className="relative w-full min-h-[100dvh] sm:min-h-[92vh] lg:min-h-screen overflow-hidden flex items-center justify-center sm:justify-start cursor-crosshair pt-20 sm:pt-28 pb-10 sm:pb-16 px-4 sm:px-6 md:px-12 lg:px-20"
       >
         {/* Layer 1 (Bottom): Prince Albert Unmasked in Spider-Man Suit */}
         <div className="absolute inset-0 pointer-events-none z-10 overflow-hidden">
@@ -134,7 +138,7 @@ export default function Hero() {
             fill
             priority
             sizes="100vw"
-            className="object-cover object-[62%_30%] sm:object-[64%_34%] lg:object-[66%_38%]"
+            className="object-cover object-[50%_14%] sm:object-[55%_25%] md:object-[60%_30%] lg:object-[66%_38%] scale-[1.08] sm:scale-100 origin-[50%_18%]"
           />
         </div>
 
@@ -149,16 +153,14 @@ export default function Hero() {
             fill
             priority
             sizes="100vw"
-            className="object-cover object-[62%_30%] sm:object-[64%_34%] lg:object-[66%_38%]"
+            className="object-cover object-[50%_14%] sm:object-[55%_25%] md:object-[60%_30%] lg:object-[66%_38%] scale-[1.08] sm:scale-100 origin-[50%_18%]"
           />
         </div>
 
-        {/* Soft protective gradient on tablet/mobile so text is effortlessly readable */}
-        <div className="absolute inset-0 pointer-events-none z-20 bg-gradient-to-r from-white/95 via-white/85 to-transparent sm:via-white/75 lg:hidden" />
-
         {/* Spider Web Corner Overlays */}
         <div className="absolute inset-0 pointer-events-none z-[25] overflow-hidden">
-          <div className="absolute top-0 left-0 w-36 h-36 sm:w-56 sm:h-56 md:w-[420px] md:h-[420px] -translate-x-1/4 -translate-y-1/4 opacity-30 sm:opacity-40 mix-blend-multiply animate-spin-slow">
+          {/* Top-left web (anchored behind logo) */}
+          <div className="absolute top-0 left-0 w-44 h-44 sm:w-56 sm:h-56 md:w-[420px] md:h-[420px] -translate-x-[14%] -translate-y-[14%] opacity-50 sm:opacity-40 mix-blend-multiply">
             <Image
               src="/spiderman/web1.png"
               alt="Spider Web Top"
@@ -167,7 +169,8 @@ export default function Hero() {
               className="object-contain"
             />
           </div>
-          <div className="absolute bottom-0 right-0 w-40 h-40 sm:w-60 sm:h-60 md:w-[500px] md:h-[500px] translate-x-1/4 translate-y-1/4 opacity-30 sm:opacity-40 mix-blend-multiply animate-spin-slow-reverse">
+          {/* Bottom-right web */}
+          <div className="absolute bottom-0 right-0 w-48 h-48 sm:w-60 sm:h-60 md:w-[500px] md:h-[500px] translate-x-[12%] translate-y-[12%] opacity-35 sm:opacity-40 mix-blend-multiply">
             <Image
               src="/spiderman/web1.png"
               alt="Spider Web Bottom"
@@ -178,23 +181,24 @@ export default function Hero() {
           </div>
         </div>
 
-        {/* Hero Content Container (Left-aligned, leaving the center-right character clearly visible) */}
-        <div className="relative z-30 max-w-xl lg:max-w-2xl w-full flex flex-col gap-3 sm:gap-4 drop-shadow-sm">
+        {/* Hero Content Container */}
+        <div className="relative z-30 max-w-xl lg:max-w-2xl w-full flex flex-col items-center text-center sm:items-start sm:text-left gap-2 sm:gap-4 drop-shadow-sm">
           {/* Friendly Neighborhood Badge */}
           <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            animate={{ opacity: 1, x: 0 }}
+            initial={{ opacity: 0, y: -15 }}
+            animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="inline-flex items-center gap-2 text-[#a31515] font-bold uppercase text-[10px] sm:text-xs md:text-sm tracking-[0.16em] sm:tracking-[0.2em]"
+            className="inline-flex items-center justify-center gap-2 text-[#b91c1c] font-bold uppercase text-[10px] sm:text-xs md:text-sm tracking-[0.16em] sm:tracking-[0.2em]"
           >
             <Image
               src="/spiderman/spydy.png"
               alt="Spider"
               width={20}
               height={20}
-              className="w-4 h-4 sm:w-5 sm:h-5 object-contain drop-shadow-sm brightness-95 shrink-0"
+              style={{ width: "auto", height: "auto" }}
+              className="hidden sm:inline-block w-4 h-4 sm:w-5 sm:h-5 object-contain drop-shadow-sm brightness-95 shrink-0"
             />
-            <span className="truncate">Your Friendly Neighborhood Engineer</span>
+            <span>Your Friendly Neighborhood Engineer</span>
           </motion.div>
 
           {/* Comic Header Title */}
@@ -202,7 +206,7 @@ export default function Hero() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.15 }}
-            className="text-gray-900 text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-[5.5rem] font-black tracking-tighter leading-[0.92] uppercase italic"
+            className="text-gray-950 text-[3.15rem] sm:text-5xl md:text-6xl lg:text-7xl xl:text-[5.5rem] font-black tracking-tighter leading-[0.88] uppercase italic"
             style={{
               textShadow: "3px 3px 0px #ef4444, 6px 6px 0px #a31515",
             }}
@@ -212,23 +216,23 @@ export default function Hero() {
             ALBERT.
           </motion.h1>
 
-          {/* Animated Role Cycler */}
+          {/* Animated Role Cycler (Desktop / Tablet) */}
           <motion.div
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.3 }}
-            className="mt-1 sm:mt-2 text-lg sm:text-xl md:text-2xl font-bold tracking-tight text-gray-800"
+            className="hidden sm:block mt-1 sm:mt-2 text-lg sm:text-xl md:text-2xl font-bold tracking-tight text-gray-800"
           >
             <span className="text-gray-500 mr-2">&gt;</span>
             <RoleCycler />
           </motion.div>
 
-          {/* Description */}
+          {/* Description (Desktop / Tablet) */}
           <motion.p
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.4 }}
-            className="mt-1 sm:mt-2 max-w-[48ch] text-sm sm:text-base md:text-lg leading-relaxed text-gray-800 font-medium"
+            className="hidden sm:block mt-1 sm:mt-2 max-w-[48ch] text-sm sm:text-base md:text-lg leading-relaxed text-gray-800 font-medium"
           >
             Full-stack developer with production experience across React.js,
             Node.js/Express, and SQL architectures. Founder of{" "}
@@ -246,12 +250,12 @@ export default function Hero() {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.55 }}
-            className="mt-4 sm:mt-6 flex flex-col sm:flex-row flex-wrap items-stretch sm:items-center gap-3 sm:gap-4"
+            transition={{ duration: 0.6, delay: 0.25 }}
+            className="mt-6 sm:mt-6 flex flex-col sm:flex-row items-center gap-3 sm:gap-4 w-full sm:w-auto"
           >
             <a
               href="#work"
-              className="inline-flex items-center justify-center rounded-lg border border-[#a31515] bg-[#a31515] px-6 sm:px-8 py-3 sm:py-3.5 font-mono text-xs sm:text-sm font-bold uppercase tracking-wider text-white shadow-[0_6px_20px_rgba(163,21,21,0.4)] transition-all duration-300 hover:-translate-y-1 hover:bg-[#7a0f0f] hover:shadow-[0_10px_25px_rgba(163,21,21,0.6)] cursor-pointer text-center"
+              className="w-full max-w-[260px] sm:w-auto inline-flex items-center justify-center rounded-lg border border-[#a31515] bg-[#991414] sm:bg-[#a31515] px-6 sm:px-8 py-3.5 sm:py-3.5 font-sans sm:font-mono text-xs sm:text-sm font-bold uppercase tracking-wider text-white shadow-[0_6px_20px_rgba(163,21,21,0.35)] transition-all duration-300 hover:-translate-y-1 hover:bg-[#7a0f0f] hover:shadow-[0_10px_25px_rgba(163,21,21,0.6)] cursor-pointer text-center"
             >
               Explore Projects
             </a>
@@ -259,34 +263,33 @@ export default function Hero() {
             <a
               href="/Prince_Albert_Resume.pdf"
               download="Prince_Albert_Resume.pdf"
-              className="group inline-flex items-center justify-center gap-2.5 rounded-lg border border-gray-900 bg-gray-900 px-5 sm:px-6 py-3 sm:py-3.5 font-mono text-xs sm:text-sm font-bold uppercase tracking-wider text-white shadow-md transition-all duration-300 hover:-translate-y-1 hover:bg-black hover:shadow-xl cursor-pointer text-center"
+              className="group w-full max-w-[260px] sm:w-auto inline-flex items-center justify-center gap-2.5 rounded-lg border border-slate-800/80 bg-[#0e1626] sm:bg-gray-900 px-5 sm:px-6 py-3.5 sm:py-3.5 font-sans sm:font-mono text-xs sm:text-sm font-bold uppercase tracking-wider text-white shadow-md transition-all duration-300 hover:-translate-y-1 hover:bg-black hover:shadow-xl cursor-pointer text-center"
             >
               <svg
                 className="h-4 w-4 fill-current transition-transform group-hover:scale-110 shrink-0"
                 viewBox="0 0 24 24"
               >
-                <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z" />
+                <path d="M12 16l4-5h-3V4h-2v7H8l4 5zm-7 2v2h14v-2H5z" />
               </svg>
-              <span>Resume.pdf</span>
+              <span>SDE_Resume.pdf</span>
             </a>
 
             <a
               href="https://github.com/Prince121711"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center justify-center gap-2 rounded-lg border border-gray-300 bg-white/90 backdrop-blur-sm px-4 sm:px-5 py-3 sm:py-3.5 font-mono text-xs sm:text-sm font-bold uppercase tracking-wider text-gray-800 transition-all duration-300 hover:-translate-y-1 hover:border-[#a31515] hover:text-[#a31515] hover:shadow-md cursor-pointer text-center"
+              className="hidden sm:inline-flex items-center justify-center gap-2 rounded-lg border border-gray-300 bg-white/90 backdrop-blur-sm px-4 sm:px-5 py-3 sm:py-3.5 font-mono text-xs sm:text-sm font-bold uppercase tracking-wider text-gray-800 transition-all duration-300 hover:-translate-y-1 hover:border-[#a31515] hover:text-[#a31515] hover:shadow-md cursor-pointer text-center"
             >
               <span>GitHub ↗</span>
             </a>
           </motion.div>
 
-          {/* Location & Hint */}
-          <div className="mt-3 sm:mt-4 flex flex-wrap items-center gap-2 sm:gap-4 text-[11px] sm:text-xs font-mono tracking-wider text-gray-600 uppercase">
+          {/* Location & Hint (Desktop / Tablet) */}
+          <div className="hidden sm:flex mt-3 sm:mt-4 flex-wrap items-center gap-2 sm:gap-4 text-[11px] sm:text-xs font-mono tracking-wider text-gray-600 uppercase">
             <span>📍 Salem, Tamil Nadu, India</span>
-            <span className="hidden sm:inline">•</span>
+            <span>•</span>
             <span className="text-[#a31515] font-semibold animate-pulse">
-              <span className="hidden sm:inline">⚡ Hover mouse over hero to unmask</span>
-              <span className="sm:hidden">⚡ Drag finger to unmask</span>
+              ⚡ Hover mouse over hero to unmask
             </span>
           </div>
         </div>
@@ -298,6 +301,7 @@ export default function Hero() {
             alt="Spider badge"
             width={20}
             height={20}
+            style={{ width: "auto", height: "auto" }}
             className="h-5 w-5 object-contain brightness-200"
           />
           <div>
@@ -326,6 +330,7 @@ export default function Hero() {
                   alt="Separator"
                   width={24}
                   height={24}
+                  style={{ width: "auto", height: "auto" }}
                   className="mx-2 sm:mx-4 h-3.5 sm:h-5 md:h-6 w-auto object-contain shrink-0 brightness-200"
                 />
               </div>
@@ -346,6 +351,7 @@ export default function Hero() {
                   alt="Separator"
                   width={24}
                   height={24}
+                  style={{ width: "auto", height: "auto" }}
                   className="mx-2 sm:mx-4 h-3.5 sm:h-5 md:h-6 w-auto object-contain shrink-0 opacity-80"
                 />
               </div>

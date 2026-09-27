@@ -22,6 +22,7 @@ export default function Footer() {
             alt="Spider"
             width={16}
             height={16}
+            style={{ width: "auto", height: "auto" }}
             className="h-4 w-4 object-contain brightness-95 shrink-0"
           />
           <p>

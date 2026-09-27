@@ -70,6 +70,7 @@ export default function About() {
                   alt="Spider"
                   width={20}
                   height={20}
+                  style={{ width: "auto", height: "auto" }}
                   className="h-4 w-4 sm:h-5 sm:w-5 object-contain drop-shadow-sm shrink-0"
                 />
                 Behind the Mask
@@ -170,6 +171,7 @@ export default function About() {
                     alt="Spider"
                     width={20}
                     height={20}
+                    style={{ width: "auto", height: "auto" }}
                     className="h-4 w-4 sm:h-5 sm:w-5 brightness-200"
                   />
                 </div>

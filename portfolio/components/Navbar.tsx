@@ -84,7 +84,7 @@ export default function Navbar() {
         className={`fixed inset-x-0 top-0 z-[60] transition-all duration-300 ${
           scrolled
             ? "bg-black/90 backdrop-blur-md border-b border-red-900/50 py-3.5 shadow-[0_4px_30px_rgba(220,38,38,0.18)]"
-            : "bg-white/85 backdrop-blur-sm border-b border-gray-200/70 py-4 sm:py-5"
+            : "bg-transparent border-b border-transparent sm:bg-white/85 sm:backdrop-blur-sm sm:border-gray-200/70 py-4 sm:py-5"
         }`}
       >
         <nav className="mx-auto flex max-w-7xl items-center justify-between px-4 sm:px-6 md:px-12">
@@ -93,17 +93,16 @@ export default function Navbar() {
             <button
               onClick={handleLogoClick}
               title="Click or press Alt+S for Spider-Sense!"
-              className={`flex items-center gap-1.5 text-xl sm:text-2xl font-black italic tracking-tighter uppercase transition-colors text-left cursor-pointer ${
+              className={`flex items-center text-xl sm:text-2xl font-black italic tracking-tighter uppercase transition-colors text-left cursor-pointer ${
                 scrolled ? "text-white" : "text-gray-900"
               }`}
             >
-              <span className="relative flex items-center justify-center">
-                <span className="text-red-600 drop-shadow-[0_0_10px_rgba(220,38,38,0.8)] group-hover:scale-125 transition-transform duration-300">
-                  P
-                </span>
+              <span className="text-red-600 transition-transform duration-300 group-hover:scale-125">
+                P
               </span>
               <span className="transition-colors group-hover:text-red-500">
-                RINCE ALBERT<span className="text-[#a31515]">.</span>
+                RINCE<span className="hidden sm:inline"> ALBERT</span>
+                <span className="text-red-600">.</span>
               </span>
             </button>
             <span className="absolute -bottom-5 left-0 font-mono text-[9px] uppercase tracking-wider text-gray-400 opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap">
@@ -141,7 +140,7 @@ export default function Navbar() {
             })}
           </ul>
 
-          {/* Right Action Buttons & Audio Toggle */}
+          {/* Right Action Buttons & Audio Toggle (Desktop) */}
           <div className="hidden items-center gap-4 md:flex">
             {/* Audio Toggle Button */}
             <button
@@ -170,22 +169,15 @@ export default function Navbar() {
                 alt="Spider"
                 width={16}
                 height={16}
+                style={{ width: "auto", height: "auto" }}
                 className="h-4 w-4 object-contain brightness-200"
               />
               <span>Get In Touch</span>
             </a>
           </div>
 
-          {/* Mobile Sound & Hamburger controls */}
-          <div className="flex items-center gap-3 md:hidden">
-            <button
-              onClick={toggleSound}
-              aria-label="Toggle Sound"
-              className="flex h-9 w-9 items-center justify-center rounded-lg border border-gray-300 text-sm"
-            >
-              {soundOn ? "🔊" : "🔇"}
-            </button>
-
+          {/* Mobile Clean Hamburger control (matches screenshot) */}
+          <div className="flex items-center md:hidden">
             <button
               aria-label={menuOpen ? "Close menu" : "Open menu"}
               aria-expanded={menuOpen}
@@ -193,25 +185,21 @@ export default function Navbar() {
                 setMenuOpen((v) => !v);
                 playClickSound();
               }}
-              className={`relative z-[80] flex h-10 w-10 flex-col items-center justify-center gap-[6px] rounded-lg border p-2 transition-colors ${
-                scrolled
-                  ? "border-red-900/50 text-white hover:text-red-500"
-                  : "border-gray-200 text-gray-900 hover:text-[#a31515]"
-              }`}
+              className="relative z-[80] flex h-10 w-10 flex-col items-end justify-center gap-[5px] p-2 focus:outline-none cursor-pointer"
             >
               <motion.span
-                className={`h-[2px] w-6 ${scrolled ? "bg-white" : "bg-gray-900"}`}
-                animate={menuOpen ? { rotate: 45, y: 4 } : { rotate: 0, y: 0 }}
+                className={`h-[2.5px] w-6 rounded-full transition-all ${scrolled ? "bg-white" : "bg-gray-800"}`}
+                animate={menuOpen ? { rotate: 45, y: 7.5 } : { rotate: 0, y: 0 }}
                 transition={{ duration: 0.25 }}
               />
               <motion.span
-                className={`h-[2px] w-6 ${scrolled ? "bg-white" : "bg-gray-900"}`}
+                className={`h-[2.5px] w-6 rounded-full transition-all ${scrolled ? "bg-white" : "bg-gray-800"}`}
                 animate={menuOpen ? { opacity: 0 } : { opacity: 1 }}
                 transition={{ duration: 0.15 }}
               />
               <motion.span
-                className={`h-[2px] w-6 ${scrolled ? "bg-white" : "bg-gray-900"}`}
-                animate={menuOpen ? { rotate: -45, y: -8 } : { rotate: 0, y: 0 }}
+                className={`h-[2.5px] w-6 rounded-full transition-all ${scrolled ? "bg-white" : "bg-gray-800"}`}
+                animate={menuOpen ? { rotate: -45, y: -7.5 } : { rotate: 0, y: 0 }}
                 transition={{ duration: 0.25 }}
               />
             </button>
@@ -266,6 +254,13 @@ export default function Navbar() {
 
             <div className="flex flex-col gap-4 border-t border-gray-800 pt-6">
               <button
+                onClick={toggleSound}
+                className="flex items-center justify-center gap-2 rounded-lg border border-gray-800 bg-gray-900/90 py-3 text-center font-mono text-xs font-bold uppercase tracking-wider text-gray-300"
+              >
+                <span>{soundOn ? "🔊 Spider-Man Sound: ON" : "🔇 Spider-Man Sound: OFF"}</span>
+              </button>
+
+              <button
                 onClick={() => {
                   window.dispatchEvent(new CustomEvent("spider-sense-trigger"));
                   setMenuOpen(false);
@@ -288,6 +283,7 @@ export default function Navbar() {
                   alt="Spider"
                   width={18}
                   height={18}
+                  style={{ width: "auto", height: "auto" }}
                   className="h-4 w-4 object-contain brightness-200"
                 />
                 Get In Touch

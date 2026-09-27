@@ -68,6 +68,7 @@ export default function Skills() {
               alt="Spider"
               width={16}
               height={16}
+              style={{ width: "auto", height: "auto" }}
               className="h-3.5 w-3.5 sm:h-4 sm:w-4 object-contain"
             />
             Arsenal &amp; Expertise
