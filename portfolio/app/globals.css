@@ -1,0 +1,70 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+body {
+  background-color: #fafafa;
+  color: #111111;
+  overflow-x: hidden;
+}
+
+::selection {
+  background-color: #a31515;
+  color: #ffffff;
+}
+
+/* Visible keyboard focus */
+:focus-visible {
+  outline: 2px solid #a31515;
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* Thin scrollbar matching the light palette */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #fafafa;
+}
+::-webkit-scrollbar-thumb {
+  background: #e4e4e7;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #d4d4d8;
+}
+
+/* Custom crosshair cursor on fine-pointer devices */
+@media (hover: hover) and (pointer: fine) {
+  body {
+    cursor: crosshair;
+  }
+  a,
+  button {
+    cursor: pointer;
+  }
+}
