@@ -181,7 +181,7 @@ export default function Hero() {
           <Image
             src={
               isSymbiote
-                ? "/spiderman/symbiote-spiderman.png"
+                ? "/spiderman/symbiote-spiderman.png?v=silver3d"
                 : "/spiderman/image-1.png"
             }
             alt={isSymbiote ? "Black Suit Symbiote Spider-Man" : "Spider-Man Masked"}
