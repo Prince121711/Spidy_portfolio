@@ -6,10 +6,13 @@ import { projects } from "@/lib/data";
 
 const projectHighlights: Record<string, string> = {
   "Lumen Academy": "23 Modules • 79 Lessons • Production Platform",
-  "Tax-Shield: AI Tax Compliance Assistant": "Peer-Reviewed • BMC Research Notes (Springer Nature)",
-  "AI Policy & Compliance Intelligence System": "Sentence-Transformers • TCS iON Industry Capstone",
+  "Tax-Shield: AI Tax Compliance Assistant":
+    "Peer-Reviewed • BMC Research Notes (Springer Nature)",
+  "AI Policy & Compliance Intelligence System":
+    "Sentence-Transformers • TCS iON Industry Capstone",
   "Loan Management System": "Full-Stack MVC • Java Spring Boot & SQL",
-  "Data Pipeline & Analytics Engine": "Automated ETL • Pandas/NumPy & Predictive EDA",
+  "Data Pipeline & Analytics Engine":
+    "Automated ETL • Pandas/NumPy & Predictive EDA",
 };
 
 export default function Work() {
@@ -82,7 +85,11 @@ export default function Work() {
                       src={project.image}
                       alt={`${project.title} Preview`}
                       fill
-                      sizes={idx === 0 ? "(max-width: 768px) 100vw, 896px" : "(max-width: 768px) 100vw, 440px"}
+                      sizes={
+                        idx === 0
+                          ? "(max-width: 768px) 100vw, 896px"
+                          : "(max-width: 768px) 100vw, 440px"
+                      }
                       className="object-cover object-top transition-transform duration-500 group-hover:scale-105"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
@@ -103,7 +110,9 @@ export default function Work() {
                 {projectHighlights[project.title] && (
                   <div className="mt-2.5 sm:mt-3 inline-flex items-center gap-1.5 rounded-md bg-red-50 border border-red-100 px-2 sm:px-2.5 py-1 text-[10px] sm:text-[11px] font-mono font-bold text-[#a31515]">
                     <span>⚡</span>
-                    <span className="truncate">{projectHighlights[project.title]}</span>
+                    <span className="truncate">
+                      {projectHighlights[project.title]}
+                    </span>
                   </div>
                 )}
 

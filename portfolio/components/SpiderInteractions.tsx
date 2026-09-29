@@ -56,7 +56,10 @@ export default function SpiderInteractions() {
       if (target.tagName === "INPUT" || target.tagName === "TEXTAREA") return;
 
       const newId = ++burstIdRef.current;
-      setBursts((prev) => [...prev.slice(-6), { id: newId, x: e.clientX, y: e.clientY }]);
+      setBursts((prev) => [
+        ...prev.slice(-6),
+        { id: newId, x: e.clientX, y: e.clientY },
+      ]);
       playThwipSound();
 
       setTimeout(() => {
@@ -79,7 +82,11 @@ export default function SpiderInteractions() {
       const target = e.target as HTMLElement | null;
       if (target) {
         setIsHoveringClickable(
-          Boolean(target.closest("a, button, input, textarea, [role='button'], .cursor-pointer"))
+          Boolean(
+            target.closest(
+              "a, button, input, textarea, [role='button'], .cursor-pointer",
+            ),
+          ),
         );
       }
     };
@@ -89,7 +96,9 @@ export default function SpiderInteractions() {
     };
 
     window.addEventListener("mousemove", handleMouseMove, { passive: true });
-    document.addEventListener("mouseleave", handleMouseLeave, { passive: true });
+    document.addEventListener("mouseleave", handleMouseLeave, {
+      passive: true,
+    });
     return () => {
       window.removeEventListener("mousemove", handleMouseMove);
       document.removeEventListener("mouseleave", handleMouseLeave);
@@ -153,18 +162,99 @@ export default function SpiderInteractions() {
               className="overflow-visible"
             >
               {/* Radial Web Strands */}
-              <line x1="50" y1="50" x2="50" y2="10" stroke="#a31515" strokeWidth="1.5" strokeLinecap="round" />
-              <line x1="50" y1="50" x2="90" y2="50" stroke="#a31515" strokeWidth="1.5" strokeLinecap="round" />
-              <line x1="50" y1="50" x2="50" y2="90" stroke="#a31515" strokeWidth="1.5" strokeLinecap="round" />
-              <line x1="50" y1="50" x2="10" y2="50" stroke="#a31515" strokeWidth="1.5" strokeLinecap="round" />
-              <line x1="50" y1="50" x2="78" y2="22" stroke="#dc2626" strokeWidth="1.5" strokeLinecap="round" />
-              <line x1="50" y1="50" x2="78" y2="78" stroke="#dc2626" strokeWidth="1.5" strokeLinecap="round" />
-              <line x1="50" y1="50" x2="22" y2="78" stroke="#dc2626" strokeWidth="1.5" strokeLinecap="round" />
-              <line x1="50" y1="50" x2="22" y2="22" stroke="#dc2626" strokeWidth="1.5" strokeLinecap="round" />
+              <line
+                x1="50"
+                y1="50"
+                x2="50"
+                y2="10"
+                stroke="#a31515"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+              />
+              <line
+                x1="50"
+                y1="50"
+                x2="90"
+                y2="50"
+                stroke="#a31515"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+              />
+              <line
+                x1="50"
+                y1="50"
+                x2="50"
+                y2="90"
+                stroke="#a31515"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+              />
+              <line
+                x1="50"
+                y1="50"
+                x2="10"
+                y2="50"
+                stroke="#a31515"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+              />
+              <line
+                x1="50"
+                y1="50"
+                x2="78"
+                y2="22"
+                stroke="#dc2626"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+              />
+              <line
+                x1="50"
+                y1="50"
+                x2="78"
+                y2="78"
+                stroke="#dc2626"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+              />
+              <line
+                x1="50"
+                y1="50"
+                x2="22"
+                y2="78"
+                stroke="#dc2626"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+              />
+              <line
+                x1="50"
+                y1="50"
+                x2="22"
+                y2="22"
+                stroke="#dc2626"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+              />
 
               {/* Connecting Web Arcs */}
-              <circle cx="50" cy="50" r="16" fill="none" stroke="#a31515" strokeWidth="1.2" strokeDasharray="3 2" />
-              <circle cx="50" cy="50" r="32" fill="none" stroke="#dc2626" strokeWidth="1" strokeDasharray="4 3" opacity="0.8" />
+              <circle
+                cx="50"
+                cy="50"
+                r="16"
+                fill="none"
+                stroke="#a31515"
+                strokeWidth="1.2"
+                strokeDasharray="3 2"
+              />
+              <circle
+                cx="50"
+                cy="50"
+                r="32"
+                fill="none"
+                stroke="#dc2626"
+                strokeWidth="1"
+                strokeDasharray="4 3"
+                opacity="0.8"
+              />
 
               {/* Center Web Node */}
               <circle cx="50" cy="50" r="3" fill="#a31515" />
@@ -201,7 +291,10 @@ export default function SpiderInteractions() {
               className="relative z-10 flex flex-col items-center"
             >
               {/* Comic Tingle Waves SVG */}
-              <svg viewBox="0 0 240 90" className="w-48 sm:w-56 md:w-60 h-auto overflow-visible filter drop-shadow-[0_0_12px_rgba(239,68,68,0.9)]">
+              <svg
+                viewBox="0 0 240 90"
+                className="w-48 sm:w-56 md:w-60 h-auto overflow-visible filter drop-shadow-[0_0_12px_rgba(239,68,68,0.9)]"
+              >
                 {/* Yellow & Red Iconic Comic Tingles */}
                 <path
                   d="M20 70 L45 20 L70 55 L95 10 L120 50 L145 10 L170 55 L195 20 L220 70"
@@ -224,7 +317,7 @@ export default function SpiderInteractions() {
               {/* Comic Sound Badge */}
               <motion.div
                 initial={{ scale: 0.8, rotate: -3 }}
-                animate={{ scale: 1, rotate: [ -3, 3, -2 ] }}
+                animate={{ scale: 1, rotate: [-3, 3, -2] }}
                 className="mt-2 rounded-2xl bg-black/90 border-2 border-red-500 px-4 sm:px-6 py-2 sm:py-2.5 shadow-[0_0_30px_rgba(220,38,38,0.8)] backdrop-blur-md flex items-center gap-2 sm:gap-3"
               >
                 <span className="text-base sm:text-xl">⚡</span>

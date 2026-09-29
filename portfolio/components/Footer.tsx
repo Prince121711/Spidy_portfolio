@@ -26,7 +26,8 @@ export default function Footer() {
             className="h-4 w-4 object-contain brightness-95 shrink-0"
           />
           <p>
-            &copy; {year} <span className="font-bold text-gray-900">Prince Albert</span>.
+            &copy; {year}{" "}
+            <span className="font-bold text-gray-900">Prince Albert</span>.
             Engineered with Spider-Sense &amp; Next.js.
           </p>
         </div>

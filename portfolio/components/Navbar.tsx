@@ -5,7 +5,12 @@ import { motion, AnimatePresence, useScroll, useSpring } from "framer-motion";
 import Image from "next/image";
 import { nav } from "@/lib/data";
 import { setSoundEnabled, playClickSound } from "@/lib/soundEffects";
-import { getInitialTheme, toggleSpiderTheme, applyTheme, SpiderTheme } from "@/lib/theme";
+import {
+  getInitialTheme,
+  toggleSpiderTheme,
+  applyTheme,
+  SpiderTheme,
+} from "@/lib/theme";
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
@@ -15,7 +20,11 @@ export default function Navbar() {
   const [theme, setTheme] = useState<SpiderTheme>("classic");
 
   const { scrollYProgress } = useScroll();
-  const progress = useSpring(scrollYProgress, { stiffness: 220, damping: 30, mass: 0.3 });
+  const progress = useSpring(scrollYProgress, {
+    stiffness: 220,
+    damping: 30,
+    mass: 0.3,
+  });
 
   // Sound and Theme preference initialization
   useEffect(() => {
@@ -36,7 +45,8 @@ export default function Navbar() {
       }
     };
     window.addEventListener("spider-theme-change", handleThemeChange);
-    return () => window.removeEventListener("spider-theme-change", handleThemeChange);
+    return () =>
+      window.removeEventListener("spider-theme-change", handleThemeChange);
   }, []);
 
   const toggleSound = () => {
@@ -65,7 +75,14 @@ export default function Navbar() {
       setScrolled(window.scrollY > 30);
 
       // Active section detection
-      const sections = ["work", "about", "skills", "experience", "certifications", "contact"];
+      const sections = [
+        "work",
+        "about",
+        "skills",
+        "experience",
+        "certifications",
+        "contact",
+      ];
       const scrollPos = window.scrollY + 200;
 
       for (let i = sections.length - 1; i >= 0; i--) {
@@ -114,7 +131,9 @@ export default function Navbar() {
               onClick={handleLogoClick}
               title="Click or press Alt+S for Spider-Sense!"
               className={`flex items-baseline text-xl lg:text-2xl font-black italic tracking-tighter uppercase whitespace-nowrap transition-colors text-left cursor-pointer ${
-                scrolled || theme === "symbiote" ? "text-white" : "text-gray-950"
+                scrolled || theme === "symbiote"
+                  ? "text-white"
+                  : "text-gray-950"
               }`}
             >
               <span className="text-red-600 transition-transform duration-300 group-hover:scale-125 mr-0.5">
@@ -144,8 +163,8 @@ export default function Navbar() {
                       isActive
                         ? "text-red-500 font-extrabold"
                         : scrolled || theme === "symbiote"
-                        ? "text-gray-300 hover:text-white"
-                        : "text-gray-700 hover:text-[#a31515]"
+                          ? "text-gray-300 hover:text-white"
+                          : "text-gray-700 hover:text-[#a31515]"
                     }`}
                   >
                     {item.label}
@@ -174,11 +193,13 @@ export default function Navbar() {
                 theme === "symbiote"
                   ? "border-red-600/80 bg-red-950/50 text-red-200 shadow-[0_0_15px_rgba(220,38,38,0.35)] hover:border-red-500"
                   : scrolled
-                  ? "border-gray-700 text-gray-300 hover:text-white hover:border-gray-500"
-                  : "border-gray-300 text-gray-700 hover:text-[#a31515] hover:border-[#a31515] bg-white/70"
+                    ? "border-gray-700 text-gray-300 hover:text-white hover:border-gray-500"
+                    : "border-gray-300 text-gray-700 hover:text-[#a31515] hover:border-[#a31515] bg-white/70"
               }`}
             >
-              <span className="text-sm">{theme === "symbiote" ? "🕸️" : "🕷️"}</span>
+              <span className="text-sm">
+                {theme === "symbiote" ? "🕸️" : "🕷️"}
+              </span>
               <span className="text-[11px] whitespace-nowrap">
                 {theme === "symbiote" ? "Symbiote" : "Classic"}
               </span>
@@ -187,13 +208,15 @@ export default function Navbar() {
             {/* Audio Toggle Button */}
             <button
               onClick={toggleSound}
-              title={soundOn ? "Mute Spider-Man Audio" : "Enable Spider-Man Audio"}
+              title={
+                soundOn ? "Mute Spider-Man Audio" : "Enable Spider-Man Audio"
+              }
               className={`flex h-9 w-9 items-center justify-center rounded-lg border font-mono text-xs font-bold uppercase tracking-wider transition-all duration-300 cursor-pointer shrink-0 ${
                 soundOn
                   ? "border-[#a31515] bg-[#a31515]/10 text-red-500 shadow-[0_0_12px_rgba(220,38,38,0.3)] animate-pulse"
                   : scrolled || theme === "symbiote"
-                  ? "border-gray-700 text-gray-400 hover:text-white hover:border-gray-500"
-                  : "border-gray-300 text-gray-600 hover:text-gray-900 hover:border-gray-400 bg-white/70"
+                    ? "border-gray-700 text-gray-400 hover:text-white hover:border-gray-500"
+                    : "border-gray-300 text-gray-600 hover:text-gray-900 hover:border-gray-400 bg-white/70"
               }`}
             >
               <span className="text-sm">{soundOn ? "🔊" : "🔇"}</span>
@@ -230,23 +253,33 @@ export default function Navbar() {
             >
               <motion.span
                 className={`h-[2.5px] w-6 rounded-full transition-all ${
-                  menuOpen || scrolled || theme === "symbiote" ? "bg-slate-50" : "bg-gray-800"
+                  menuOpen || scrolled || theme === "symbiote"
+                    ? "bg-slate-50"
+                    : "bg-gray-800"
                 }`}
-                animate={menuOpen ? { rotate: 45, y: 7.5 } : { rotate: 0, y: 0 }}
+                animate={
+                  menuOpen ? { rotate: 45, y: 7.5 } : { rotate: 0, y: 0 }
+                }
                 transition={{ duration: 0.25 }}
               />
               <motion.span
                 className={`h-[2.5px] w-6 rounded-full transition-all ${
-                  menuOpen || scrolled || theme === "symbiote" ? "bg-slate-50" : "bg-gray-800"
+                  menuOpen || scrolled || theme === "symbiote"
+                    ? "bg-slate-50"
+                    : "bg-gray-800"
                 }`}
                 animate={menuOpen ? { opacity: 0 } : { opacity: 1 }}
                 transition={{ duration: 0.15 }}
               />
               <motion.span
                 className={`h-[2.5px] w-6 rounded-full transition-all ${
-                  menuOpen || scrolled || theme === "symbiote" ? "bg-slate-50" : "bg-gray-800"
+                  menuOpen || scrolled || theme === "symbiote"
+                    ? "bg-slate-50"
+                    : "bg-gray-800"
                 }`}
-                animate={menuOpen ? { rotate: -45, y: -7.5 } : { rotate: 0, y: 0 }}
+                animate={
+                  menuOpen ? { rotate: -45, y: -7.5 } : { rotate: 0, y: 0 }
+                }
                 transition={{ duration: 0.25 }}
               />
             </button>
@@ -288,7 +321,9 @@ export default function Navbar() {
                         playClickSound();
                       }}
                       className={`flex items-center gap-3 text-2xl font-black italic tracking-tighter uppercase transition-colors ${
-                        isActive ? "text-red-500" : "text-white hover:text-red-500"
+                        isActive
+                          ? "text-red-500"
+                          : "text-white hover:text-red-500"
                       }`}
                     >
                       <span className="text-[#a31515]">&gt;</span>
@@ -309,7 +344,11 @@ export default function Navbar() {
                     : "border-gray-800 bg-gray-900/90 text-gray-300"
                 }`}
               >
-                <span>{theme === "symbiote" ? "🕸️ Suit: Symbiote Mode (Black)" : "🕷️ Suit: Classic Mode (Red)"}</span>
+                <span>
+                  {theme === "symbiote"
+                    ? "🕸️ Suit: Symbiote Mode (Black)"
+                    : "🕷️ Suit: Classic Mode (Red)"}
+                </span>
               </button>
 
               {/* Sound Toggle */}
@@ -317,7 +356,11 @@ export default function Navbar() {
                 onClick={toggleSound}
                 className="flex items-center justify-center gap-2 rounded-lg border border-gray-800 bg-gray-900/90 py-3 text-center font-mono text-xs font-bold uppercase tracking-wider text-gray-300"
               >
-                <span>{soundOn ? "🔊 Spider-Man Audio: ON" : "🔇 Spider-Man Audio: OFF"}</span>
+                <span>
+                  {soundOn
+                    ? "🔊 Spider-Man Audio: ON"
+                    : "🔇 Spider-Man Audio: OFF"}
+                </span>
               </button>
 
               {/* Resume Download */}

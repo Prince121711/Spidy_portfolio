@@ -68,7 +68,9 @@ export default function Certifications() {
 
               <div className="mt-5 sm:mt-6 flex items-center justify-between border-t border-gray-200/80 pt-3.5 sm:pt-4 font-mono text-[10px] sm:text-[11px] text-gray-500 transition-colors group-hover:text-[#a31515]">
                 <span>Verified Credential</span>
-                <span className="transition-transform group-hover:translate-x-1">↗</span>
+                <span className="transition-transform group-hover:translate-x-1">
+                  ↗
+                </span>
               </div>
             </motion.div>
           ))}

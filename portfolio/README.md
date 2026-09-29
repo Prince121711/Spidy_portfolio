@@ -1,6 +1,6 @@
 # 🕷️ Prince Albert — Developer Portfolio
 
-An industry-grade, interactive developer portfolio inspired by the **Spider-Man aesthetic** (referencing *spydyy-portfolio*), engineered with **Next.js 14 (App Router)**, **TypeScript**, **Tailwind CSS**, **Framer Motion**, and the native **Web Audio API**.
+An industry-grade, interactive developer portfolio inspired by the **Spider-Man aesthetic** (referencing _spydyy-portfolio_), engineered with **Next.js 14 (App Router)**, **TypeScript**, **Tailwind CSS**, **Framer Motion**, and the native **Web Audio API**.
 
 Built to showcase production-grade full-stack engineering, academic peer-reviewed AI publications, and deep system architecture capabilities.
 
@@ -27,21 +27,22 @@ Built to showcase production-grade full-stack engineering, academic peer-reviewe
 
 ## 🚀 Featured Projects (Screenshots Included)
 
-| Index | Project | Stack | Highlights |
-|---|---|---|---|
-| **01** | **[Lumen Academy](#)** | `React.js`, `TypeScript`, `Node.js`, `Express`, `PostgreSQL`, `Prisma ORM`, `Firebase`, `Playwright` | Live NEET/JEE exam-prep platform across **23 modules & 79 lessons**, versioned migrations, multi-provider AI abstraction layer, automated E2E test suite. |
-| **02** | **[Tax-Shield: AI Tax Compliance](#)** | `Python`, `FastAPI`, `OCR`, `Machine Learning`, `REST API` | Automated micro-merchant tax & GST extraction engine. Published in **BMC Research Notes (Springer Nature)** after technical peer review. |
-| **03** | **[AI Policy Intelligence System](#)** | `Python`, `FastAPI`, `Streamlit`, `Sentence-Transformers`, `NLP` | Industry capstone (TCS iON) using sentence-transformer semantic embeddings to match corporate policy clauses against regulatory frameworks in real time. |
-| **04** | **[Loan Management System](#)** | `Java`, `Spring Boot`, `SQL`, `MVC Architecture`, `REST APIs` | Full-cycle banking loan application funnel, risk underwriting algorithms, amortization schedules, and SQL transaction ledger. |
-| **05** | **[Data Pipeline & Analytics Engine](#)** | `Python`, `Pandas`, `NumPy`, `Scikit-Learn`, `Matplotlib`, `Seaborn` | Automated ETL data engineering pipelines with correlation heatmap matrices, anomaly detection scatter plots, and exploratory data analysis. |
+| Index  | Project                                   | Stack                                                                                                | Highlights                                                                                                                                                |
+| ------ | ----------------------------------------- | ---------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **01** | **[Lumen Academy](#)**                    | `React.js`, `TypeScript`, `Node.js`, `Express`, `PostgreSQL`, `Prisma ORM`, `Firebase`, `Playwright` | Live NEET/JEE exam-prep platform across **23 modules & 79 lessons**, versioned migrations, multi-provider AI abstraction layer, automated E2E test suite. |
+| **02** | **[Tax-Shield: AI Tax Compliance](#)**    | `Python`, `FastAPI`, `OCR`, `Machine Learning`, `REST API`                                           | Automated micro-merchant tax & GST extraction engine. Published in **BMC Research Notes (Springer Nature)** after technical peer review.                  |
+| **03** | **[AI Policy Intelligence System](#)**    | `Python`, `FastAPI`, `Streamlit`, `Sentence-Transformers`, `NLP`                                     | Industry capstone (TCS iON) using sentence-transformer semantic embeddings to match corporate policy clauses against regulatory frameworks in real time.  |
+| **04** | **[Loan Management System](#)**           | `Java`, `Spring Boot`, `SQL`, `MVC Architecture`, `REST APIs`                                        | Full-cycle banking loan application funnel, risk underwriting algorithms, amortization schedules, and SQL transaction ledger.                             |
+| **05** | **[Data Pipeline & Analytics Engine](#)** | `Python`, `Pandas`, `NumPy`, `Scikit-Learn`, `Matplotlib`, `Seaborn`                                 | Automated ETL data engineering pipelines with correlation heatmap matrices, anomaly detection scatter plots, and exploratory data analysis.               |
 
-*All 5 project cards include high-resolution UI screenshots located in [`public/projects/`](./public/projects/).*
+_All 5 project cards include high-resolution UI screenshots located in [`public/projects/`](./public/projects/)._
 
 ---
 
 ## 🛠️ Technical Stack & Skills Arsenal
 
 ### **Frontend & UI**
+
 - **Framework**: Next.js 14 (App Router)
 - **Language**: TypeScript 5
 - **Styling**: Tailwind CSS, Vanilla CSS, Custom Comic Typography
@@ -49,6 +50,7 @@ Built to showcase production-grade full-stack engineering, academic peer-reviewe
 - **Icons & Assets**: Custom SVG Web Bursts, Favicon (`favicon.ico`), Spider-Man Theme Kit
 
 ### **Backend & Architecture**
+
 - **Runtime**: Node.js & Express.js
 - **Enterprise**: Java & Spring Boot
 - **AI/ML**: Python, FastAPI, Sentence-Transformers, Streamlit
@@ -94,10 +96,12 @@ portfolio/
 ## ⚡ Getting Started Locally
 
 ### 1. Prerequisites
+
 - **Node.js** (v18.17+ or v20+)
 - **npm** (v9+)
 
 ### 2. Installation
+
 ```bash
 # Clone the repository
 git clone https://github.com/Prince121711/prince-albert-portfolio.git
@@ -110,12 +114,15 @@ npm install
 ```
 
 ### 3. Run Development Server
+
 ```bash
 npm run dev
 ```
+
 Open **[http://localhost:3000](http://localhost:3000)** in your browser.
 
 ### 4. Build for Production
+
 ```bash
 npm run build
 npm run start
@@ -126,6 +133,7 @@ npm run start
 ## 🌐 Deployment
 
 The project is optimized for 1-click deployment on **[Vercel](https://vercel.com/)**:
+
 1. Push your repository to GitHub.
 2. Import the repository in your Vercel Dashboard.
 3. Set the Root Directory to `portfolio`.
@@ -136,11 +144,12 @@ The project is optimized for 1-click deployment on **[Vercel](https://vercel.com
 ## 📬 Contact & Author
 
 **Prince Albert**  
-*Full Stack Developer & AI Researcher*  
-- 📍 Salem, Tamil Nadu, India  
-- 📧 [princeprince45613@gmail.com](mailto:princeprince45613@gmail.com)  
-- 📱 +91 7502138129  
-- 🐙 GitHub: [@Prince121711](https://github.com/Prince121711)  
-- 💼 LinkedIn: [/in/prince-albert1217](https://linkedin.com/in/prince-albert1217)  
+_Full Stack Developer & AI Researcher_
 
-> *"With great power comes great code."*
+- 📍 Salem, Tamil Nadu, India
+- 📧 [princeprince45613@gmail.com](mailto:princeprince45613@gmail.com)
+- 📱 +91 7502138129
+- 🐙 GitHub: [@Prince121711](https://github.com/Prince121711)
+- 💼 LinkedIn: [/in/prince-albert1217](https://linkedin.com/in/prince-albert1217)
+
+> _"With great power comes great code."_

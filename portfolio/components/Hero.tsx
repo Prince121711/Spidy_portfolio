@@ -65,7 +65,8 @@ export default function Hero() {
       }
     };
     window.addEventListener("spider-theme-change", handleThemeChange);
-    return () => window.removeEventListener("spider-theme-change", handleThemeChange);
+    return () =>
+      window.removeEventListener("spider-theme-change", handleThemeChange);
   }, []);
 
   const isSymbiote = theme === "symbiote";
@@ -184,7 +185,11 @@ export default function Hero() {
                 ? "/spiderman/symbiote-spiderman.png?v=silver3d"
                 : "/spiderman/image-1.png"
             }
-            alt={isSymbiote ? "Black Suit Symbiote Spider-Man" : "Spider-Man Masked"}
+            alt={
+              isSymbiote
+                ? "Black Suit Symbiote Spider-Man"
+                : "Spider-Man Masked"
+            }
             fill
             priority
             sizes="100vw"
@@ -292,7 +297,11 @@ export default function Hero() {
               isSymbiote ? "text-gray-200" : "text-gray-800"
             }`}
           >
-            <span className={isSymbiote ? "text-red-500 mr-2" : "text-gray-500 mr-2"}>
+            <span
+              className={
+                isSymbiote ? "text-red-500 mr-2" : "text-gray-500 mr-2"
+              }
+            >
               &gt;
             </span>
             <RoleCycler isSymbiote={isSymbiote} />
@@ -384,7 +393,9 @@ export default function Hero() {
             <span className={isSymbiote ? "text-gray-400" : "text-gray-600"}>
               📍 Salem, Tamil Nadu, India
             </span>
-            <span className={isSymbiote ? "text-gray-600" : "text-gray-400"}>•</span>
+            <span className={isSymbiote ? "text-gray-600" : "text-gray-400"}>
+              •
+            </span>
             <span
               className={
                 isSymbiote
@@ -441,7 +452,11 @@ export default function Hero() {
                   {item}
                 </span>
                 <Image
-                  src={idx % 2 === 0 ? "/spiderman/spydy.png" : "/spiderman/web1.png"}
+                  src={
+                    idx % 2 === 0
+                      ? "/spiderman/spydy.png"
+                      : "/spiderman/web1.png"
+                  }
                   alt="Separator"
                   width={24}
                   height={24}
@@ -462,7 +477,11 @@ export default function Hero() {
                   {item}
                 </span>
                 <Image
-                  src={idx % 2 === 0 ? "/spiderman/web1.png" : "/spiderman/spydy.png"}
+                  src={
+                    idx % 2 === 0
+                      ? "/spiderman/web1.png"
+                      : "/spiderman/spydy.png"
+                  }
                   alt="Separator"
                   width={24}
                   height={24}

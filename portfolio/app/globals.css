@@ -33,7 +33,9 @@ body {
   background-color: #fafafa;
   color: #111111;
   overflow-x: hidden;
-  transition: background-color 0.3s ease, color 0.3s ease;
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
 }
 
 ::selection {
@@ -242,4 +244,3 @@ html.dark .hover\:shadow-\[0_12px_30px_rgba\(163\,21\,21\,0\.2\)\]:hover,
 html.symbiote .hover\:shadow-\[0_12px_30px_rgba\(163\,21\,21\,0\.2\)\]:hover {
   box-shadow: 0 12px 35px rgba(220, 38, 38, 0.25) !important;
 }
-

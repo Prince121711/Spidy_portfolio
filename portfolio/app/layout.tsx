@@ -25,7 +25,9 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "https://prince-albert.dev"),
+  metadataBase: new URL(
+    process.env.NEXT_PUBLIC_SITE_URL || "https://prince-albert.dev",
+  ),
   title: "Prince Albert — Full Stack Developer & AI Researcher",
   description:
     "Portfolio of Prince Albert — full-stack developer with production experience across React.js, Node.js/Express, and SQL. Founder of Lumen Academy and published author in BMC Research Notes (Springer Nature).",

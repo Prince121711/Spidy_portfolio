@@ -90,27 +90,31 @@ export default function About() {
             {/* Bio Paragraphs */}
             <div className="flex flex-col gap-4 sm:gap-5 text-gray-700 text-sm sm:text-base md:text-lg leading-relaxed font-medium">
               <p>
-                I&apos;m a full-stack engineer and AI/Data Science scholar based in Salem,
-                Tamil Nadu, passionate about crafting resilient, high-speed web architectures
-                and intelligent systems.
+                I&apos;m a full-stack engineer and AI/Data Science scholar based
+                in Salem, Tamil Nadu, passionate about crafting resilient,
+                high-speed web architectures and intelligent systems.
               </p>
               <p>
                 As founder and lead developer of{" "}
                 <span className="font-bold text-gray-950 underline decoration-[#a31515] decoration-2 underline-offset-4">
                   Lumen Academy
                 </span>
-                , I engineered an online NEET/JEE exam-prep platform spanning 23 modules and
-                79 lessons end-to-end — architecting a unified Prisma &amp; PostgreSQL
-                backend, automated Playwright E2E suites, and clean Next.js interfaces.
+                , I engineered an online NEET/JEE exam-prep platform spanning 23
+                modules and 79 lessons end-to-end — architecting a unified
+                Prisma &amp; PostgreSQL backend, automated Playwright E2E
+                suites, and clean Next.js interfaces.
               </p>
               <p>
                 I am also the corresponding author of{" "}
-                <span className="font-bold text-gray-950 italic">Tax-Shield</span>,
-                published in{" "}
+                <span className="font-bold text-gray-950 italic">
+                  Tax-Shield
+                </span>
+                , published in{" "}
                 <span className="font-bold text-[#a31515] italic">
                   BMC Research Notes (Springer Nature)
                 </span>
-                , combining OCR with machine learning for automated micro-merchant tax compliance.
+                , combining OCR with machine learning for automated
+                micro-merchant tax compliance.
               </p>
             </div>
 

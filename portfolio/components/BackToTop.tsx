@@ -16,7 +16,8 @@ export default function BackToTop() {
       setVisible(scrollY > 380);
 
       // Compute scroll percentage
-      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const docHeight =
+        document.documentElement.scrollHeight - window.innerHeight;
       if (docHeight > 0) {
         setScrollProgress(Math.min(1, Math.max(0, scrollY / docHeight)));
       }

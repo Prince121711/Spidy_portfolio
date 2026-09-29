@@ -43,10 +43,10 @@ export default function Contact() {
 
   const getMailtoUrl = () => {
     const subject = encodeURIComponent(
-      `Portfolio Inquiry from ${formData.name || "Colleague"}`
+      `Portfolio Inquiry from ${formData.name || "Colleague"}`,
     );
     const body = encodeURIComponent(
-      `Hi Prince,\n\n${formData.message}\n\nFrom,\n${formData.name}\nEmail: ${formData.email}`
+      `Hi Prince,\n\n${formData.message}\n\nFrom,\n${formData.name}\nEmail: ${formData.email}`,
     );
     return `mailto:${contactEmail}?subject=${subject}&body=${body}`;
   };
@@ -74,11 +74,15 @@ export default function Contact() {
         setStatus("fallback");
         playSuccessSound();
       } else {
-        setErrorMessage(data.error || "Failed to deliver message via web gateway.");
+        setErrorMessage(
+          data.error || "Failed to deliver message via web gateway.",
+        );
         setStatus("fallback");
       }
     } catch {
-      setErrorMessage("Network connection issue. You can send your message directly via email.");
+      setErrorMessage(
+        "Network connection issue. You can send your message directly via email.",
+      );
       setStatus("fallback");
     }
   };
@@ -136,7 +140,8 @@ export default function Contact() {
                   Spider-Signal Received!
                 </h3>
                 <p className="text-xs sm:text-sm text-gray-600 font-medium max-w-[40ch] mb-6">
-                  Thank you for reaching out! Your message was delivered straight to Prince Albert&apos;s inbox.
+                  Thank you for reaching out! Your message was delivered
+                  straight to Prince Albert&apos;s inbox.
                 </p>
                 <button
                   onClick={() => setStatus("idle")}
@@ -154,7 +159,8 @@ export default function Contact() {
                   Direct Email Launch
                 </h3>
                 <p className="text-xs sm:text-sm text-gray-600 font-medium max-w-[42ch] mb-5">
-                  {errorMessage || "Click below to dispatch your message directly via your email client to Prince Albert."}
+                  {errorMessage ||
+                    "Click below to dispatch your message directly via your email client to Prince Albert."}
                 </p>
                 <div className="flex flex-col sm:flex-row gap-3 w-full max-w-sm">
                   <a
@@ -173,7 +179,10 @@ export default function Contact() {
                 </div>
               </div>
             ) : (
-              <form onSubmit={handleSubmit} className="flex flex-col gap-4 sm:gap-5">
+              <form
+                onSubmit={handleSubmit}
+                className="flex flex-col gap-4 sm:gap-5"
+              >
                 {/* Honeypot field for bot suppression */}
                 <input
                   type="text"

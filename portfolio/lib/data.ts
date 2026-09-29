@@ -70,13 +70,7 @@ export const projects = [
     role: "Developer — TCS iON Capstone",
     description:
       "An AI-driven compliance intelligence system using sentence-transformer embeddings to semantically match policy documents against regulatory requirements, with a high-throughput FastAPI backend and an interactive Streamlit review dashboard.",
-    tags: [
-      "Python",
-      "Sentence-Transformers",
-      "NLP",
-      "FastAPI",
-      "Streamlit",
-    ],
+    tags: ["Python", "Sentence-Transformers", "NLP", "FastAPI", "Streamlit"],
     href: "https://github.com/Prince121711",
     image: "/projects/project-3.png",
   },
@@ -240,4 +234,3 @@ export const social = [
 export const contactEmail = "princeprince45613@gmail.com";
 export const contactPhone = "+91 7502138129";
 export const contactLocation = "Salem, Tamil Nadu, India";
-

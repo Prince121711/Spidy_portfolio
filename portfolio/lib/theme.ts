@@ -33,11 +33,14 @@ export function applyTheme(theme: SpiderTheme) {
     localStorage.setItem("spider-theme", theme);
   } catch {}
 
-  window.dispatchEvent(new CustomEvent("spider-theme-change", { detail: { theme } }));
+  window.dispatchEvent(
+    new CustomEvent("spider-theme-change", { detail: { theme } }),
+  );
 }
 
 export function toggleSpiderTheme(currentTheme: SpiderTheme): SpiderTheme {
-  const nextTheme: SpiderTheme = currentTheme === "classic" ? "symbiote" : "classic";
+  const nextTheme: SpiderTheme =
+    currentTheme === "classic" ? "symbiote" : "classic";
   applyTheme(nextTheme);
   playSymbioteSound(nextTheme === "symbiote");
   return nextTheme;

@@ -15,20 +15,90 @@ const categories = [
 ];
 
 const skillsMatrix = [
-  { name: "React.js & Next.js", category: "Frontend", level: "Advanced", type: "Frontend" },
-  { name: "JavaScript (ES6+) & TypeScript", category: "Languages", level: "Advanced", type: "Frontend" },
-  { name: "Tailwind CSS & Framer Motion", category: "UI/UX", level: "Advanced", type: "Frontend" },
-  { name: "Node.js & Express.js", category: "Backend", level: "Advanced", type: "Backend" },
-  { name: "Java & Spring Boot", category: "Enterprise", level: "Proficient", type: "Backend" },
-  { name: "RESTful APIs & Microservices", category: "Architecture", level: "Advanced", type: "Backend" },
-  { name: "PostgreSQL & MySQL", category: "Relational DB", level: "Advanced", type: "Databases" },
-  { name: "Prisma ORM & Supabase", category: "Data Layer", level: "Advanced", type: "Databases" },
-  { name: "Python & FastAPI", category: "AI / Backend", level: "Proficient", type: "Languages & AI" },
-  { name: "Machine Learning & OCR", category: "Research", level: "Proficient", type: "Languages & AI" },
-  { name: "Playwright E2E Testing", category: "Automation", level: "Advanced", type: "QA & DevOps" },
-  { name: "Docker & Containerization", category: "DevOps", level: "Proficient", type: "QA & DevOps" },
-  { name: "Git, GitHub & CI/CD", category: "Workflow", level: "Advanced", type: "QA & DevOps" },
-  { name: "Data Structures & Algorithms", category: "Computer Science", level: "Advanced", type: "Languages & AI" },
+  {
+    name: "React.js & Next.js",
+    category: "Frontend",
+    level: "Advanced",
+    type: "Frontend",
+  },
+  {
+    name: "JavaScript (ES6+) & TypeScript",
+    category: "Languages",
+    level: "Advanced",
+    type: "Frontend",
+  },
+  {
+    name: "Tailwind CSS & Framer Motion",
+    category: "UI/UX",
+    level: "Advanced",
+    type: "Frontend",
+  },
+  {
+    name: "Node.js & Express.js",
+    category: "Backend",
+    level: "Advanced",
+    type: "Backend",
+  },
+  {
+    name: "Java & Spring Boot",
+    category: "Enterprise",
+    level: "Proficient",
+    type: "Backend",
+  },
+  {
+    name: "RESTful APIs & Microservices",
+    category: "Architecture",
+    level: "Advanced",
+    type: "Backend",
+  },
+  {
+    name: "PostgreSQL & MySQL",
+    category: "Relational DB",
+    level: "Advanced",
+    type: "Databases",
+  },
+  {
+    name: "Prisma ORM & Supabase",
+    category: "Data Layer",
+    level: "Advanced",
+    type: "Databases",
+  },
+  {
+    name: "Python & FastAPI",
+    category: "AI / Backend",
+    level: "Proficient",
+    type: "Languages & AI",
+  },
+  {
+    name: "Machine Learning & OCR",
+    category: "Research",
+    level: "Proficient",
+    type: "Languages & AI",
+  },
+  {
+    name: "Playwright E2E Testing",
+    category: "Automation",
+    level: "Advanced",
+    type: "QA & DevOps",
+  },
+  {
+    name: "Docker & Containerization",
+    category: "DevOps",
+    level: "Proficient",
+    type: "QA & DevOps",
+  },
+  {
+    name: "Git, GitHub & CI/CD",
+    category: "Workflow",
+    level: "Advanced",
+    type: "QA & DevOps",
+  },
+  {
+    name: "Data Structures & Algorithms",
+    category: "Computer Science",
+    level: "Advanced",
+    type: "Languages & AI",
+  },
 ];
 
 export default function Skills() {
@@ -38,7 +108,9 @@ export default function Skills() {
     activeFilter === "All"
       ? skillsMatrix
       : skillsMatrix.filter(
-          (s) => s.type === activeFilter || s.category.toLowerCase().includes(activeFilter.toLowerCase())
+          (s) =>
+            s.type === activeFilter ||
+            s.category.toLowerCase().includes(activeFilter.toLowerCase()),
         );
 
   return (
