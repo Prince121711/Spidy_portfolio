@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import { roles } from "@/lib/data";
+import { getInitialTheme, type SpiderTheme } from "@/lib/theme";
 
 const marqueeItems = [
   "FULL STACK DEVELOPER",
@@ -16,7 +17,7 @@ const marqueeItems = [
   "REST APIS & FASTAPI",
 ];
 
-function RoleCycler() {
+function RoleCycler({ isSymbiote }: { isSymbiote: boolean }) {
   const [index, setIndex] = useState(0);
 
   useEffect(() => {
@@ -33,7 +34,11 @@ function RoleCycler() {
           animate={{ y: "0%", opacity: 1 }}
           exit={{ y: "-100%", opacity: 0 }}
           transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
-          className="absolute left-0 top-0 whitespace-nowrap text-[#a31515] drop-shadow-sm font-mono"
+          className={`absolute left-0 top-0 whitespace-nowrap font-mono ${
+            isSymbiote
+              ? "text-red-400 drop-shadow-[0_0_8px_rgba(220,38,38,0.7)]"
+              : "text-[#a31515] drop-shadow-sm"
+          }`}
         >
           {roles[index]}
         </motion.span>
@@ -48,6 +53,22 @@ export default function Hero() {
   const [targetPos, setTargetPos] = useState({ x: 800, y: 380 });
   const [maskSize, setMaskSize] = useState(200);
   const [isHovered, setIsHovered] = useState(false);
+  const [theme, setTheme] = useState<SpiderTheme>("classic");
+
+  useEffect(() => {
+    setTheme(getInitialTheme());
+
+    const handleThemeChange = (e: Event) => {
+      const customEvent = e as CustomEvent<{ theme: SpiderTheme }>;
+      if (customEvent.detail?.theme) {
+        setTheme(customEvent.detail.theme);
+      }
+    };
+    window.addEventListener("spider-theme-change", handleThemeChange);
+    return () => window.removeEventListener("spider-theme-change", handleThemeChange);
+  }, []);
+
+  const isSymbiote = theme === "symbiote";
 
   // Smooth mouse/touch interpolation loop for fluid spotlight motion
   useEffect(() => {
@@ -106,7 +127,7 @@ export default function Hero() {
     });
   };
 
-  // Only apply mask cutout when user is hovering/touching to unmask
+  // Spotlight mask cutout when user is hovering/touching to unmask
   const maskStyle = isHovered
     ? {
         WebkitMaskImage: `radial-gradient(circle ${maskSize}px at ${mousePos.x}px ${mousePos.y}px, transparent 0%, transparent 35%, black 65%, black 100%)`,
@@ -117,7 +138,11 @@ export default function Hero() {
     : undefined;
 
   return (
-    <div className="relative w-full flex flex-col bg-white overflow-hidden">
+    <div
+      className={`relative w-full flex flex-col overflow-hidden transition-colors duration-500 ${
+        isSymbiote ? "bg-[#07080c]" : "bg-[#fafafa]"
+      }`}
+    >
       {/* Hero Canvas Section */}
       <section
         id="top"
@@ -128,12 +153,18 @@ export default function Hero() {
         onTouchStart={handleTouchStart}
         onTouchMove={handleTouchMove}
         onTouchEnd={() => setIsHovered(false)}
-        className="relative w-full min-h-[100dvh] sm:min-h-[92vh] lg:min-h-screen overflow-hidden flex items-center justify-center sm:justify-start cursor-crosshair pt-20 sm:pt-28 pb-10 sm:pb-16 px-4 sm:px-6 md:px-12 lg:px-20"
+        className={`relative w-full min-h-[100dvh] sm:min-h-[92vh] lg:min-h-screen overflow-hidden flex items-center justify-center sm:justify-start cursor-crosshair pt-20 sm:pt-28 pb-10 sm:pb-16 px-4 sm:px-6 md:px-12 lg:px-20 transition-colors duration-500 ${
+          isSymbiote ? "bg-[#07080c]" : "bg-[#fafafa]"
+        }`}
       >
-        {/* Layer 1 (Bottom): Prince Albert Unmasked in Spider-Man Suit */}
+        {/* Layer 1 (Bottom): Prince Albert Unmasked in Suit */}
         <div className="absolute inset-0 pointer-events-none z-10 overflow-hidden">
           <Image
-            src="/spiderman/prince-hero-suit.png"
+            src={
+              isSymbiote
+                ? "/spiderman/prince-symbiote-suit.png"
+                : "/spiderman/prince-hero-suit.png"
+            }
             alt="Prince Albert in Spider-Man Suit"
             fill
             priority
@@ -148,8 +179,12 @@ export default function Hero() {
           className="absolute inset-0 pointer-events-none z-20 overflow-hidden"
         >
           <Image
-            src="/spiderman/image-1.png"
-            alt="Spider-Man Masked"
+            src={
+              isSymbiote
+                ? "/spiderman/symbiote-spiderman.png"
+                : "/spiderman/image-1.png"
+            }
+            alt={isSymbiote ? "Black Suit Symbiote Spider-Man" : "Spider-Man Masked"}
             fill
             priority
             sizes="100vw"
@@ -157,10 +192,26 @@ export default function Hero() {
           />
         </div>
 
+        {/* Spotlight Ring in Symbiote mode */}
+        {isHovered && isSymbiote && (
+          <div
+            className="absolute inset-0 pointer-events-none z-[22]"
+            style={{
+              background: `radial-gradient(circle ${maskSize}px at ${mousePos.x}px ${mousePos.y}px, transparent 0%, transparent 70%, rgba(220, 38, 38, 0.4) 85%, transparent 100%)`,
+            }}
+          />
+        )}
+
         {/* Spider Web Corner Overlays */}
         <div className="absolute inset-0 pointer-events-none z-[25] overflow-hidden">
           {/* Top-left web (anchored behind logo) */}
-          <div className="absolute top-0 left-0 w-44 h-44 sm:w-56 sm:h-56 md:w-[420px] md:h-[420px] -translate-x-[14%] -translate-y-[14%] opacity-50 sm:opacity-40 mix-blend-multiply">
+          <div
+            className={`absolute top-0 left-0 w-44 h-44 sm:w-56 sm:h-56 md:w-[420px] md:h-[420px] -translate-x-[14%] -translate-y-[14%] transition-all duration-500 ${
+              isSymbiote
+                ? "opacity-30 mix-blend-screen invert brightness-125"
+                : "opacity-50 sm:opacity-40 mix-blend-multiply"
+            }`}
+          >
             <Image
               src="/spiderman/web1.png"
               alt="Spider Web Top"
@@ -170,7 +221,13 @@ export default function Hero() {
             />
           </div>
           {/* Bottom-right web */}
-          <div className="absolute bottom-0 right-0 w-48 h-48 sm:w-60 sm:h-60 md:w-[500px] md:h-[500px] translate-x-[12%] translate-y-[12%] opacity-35 sm:opacity-40 mix-blend-multiply">
+          <div
+            className={`absolute bottom-0 right-0 w-48 h-48 sm:w-60 sm:h-60 md:w-[500px] md:h-[500px] translate-x-[12%] translate-y-[12%] transition-all duration-500 ${
+              isSymbiote
+                ? "opacity-30 mix-blend-screen invert brightness-125"
+                : "opacity-35 sm:opacity-40 mix-blend-multiply"
+            }`}
+          >
             <Image
               src="/spiderman/web1.png"
               alt="Spider Web Bottom"
@@ -188,7 +245,11 @@ export default function Hero() {
             initial={{ opacity: 0, y: -15 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="inline-flex items-center justify-center gap-2 text-[#b91c1c] font-bold uppercase text-[10px] sm:text-xs md:text-sm tracking-[0.16em] sm:tracking-[0.2em]"
+            className={`inline-flex items-center justify-center gap-2 font-bold uppercase text-[10px] sm:text-xs md:text-sm tracking-[0.16em] sm:tracking-[0.2em] transition-colors ${
+              isSymbiote
+                ? "text-red-400 drop-shadow-[0_0_8px_rgba(220,38,38,0.6)]"
+                : "text-[#b91c1c]"
+            }`}
           >
             <Image
               src="/spiderman/spydy.png"
@@ -196,7 +257,9 @@ export default function Hero() {
               width={20}
               height={20}
               style={{ width: "auto", height: "auto" }}
-              className="hidden sm:inline-block w-4 h-4 sm:w-5 sm:h-5 object-contain drop-shadow-sm brightness-95 shrink-0"
+              className={`hidden sm:inline-block w-4 h-4 sm:w-5 sm:h-5 object-contain drop-shadow-sm shrink-0 ${
+                isSymbiote ? "brightness-200" : "brightness-95"
+              }`}
             />
             <span>Your Friendly Neighborhood Engineer</span>
           </motion.div>
@@ -206,9 +269,13 @@ export default function Hero() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.15 }}
-            className="text-gray-950 text-[3.15rem] sm:text-5xl md:text-6xl lg:text-7xl xl:text-[5.5rem] font-black tracking-tighter leading-[0.88] uppercase italic"
+            className={`text-[3.15rem] sm:text-5xl md:text-6xl lg:text-7xl xl:text-[5.5rem] font-black tracking-tighter leading-[0.88] uppercase italic transition-colors ${
+              isSymbiote ? "text-white" : "text-gray-950"
+            }`}
             style={{
-              textShadow: "3px 3px 0px #ef4444, 6px 6px 0px #a31515",
+              textShadow: isSymbiote
+                ? "3px 3px 0px #dc2626, 6px 6px 0px #7f1d1d, 0 0 25px rgba(220,38,38,0.35)"
+                : "3px 3px 0px #ef4444, 6px 6px 0px #a31515",
             }}
           >
             PRINCE
@@ -221,10 +288,14 @@ export default function Hero() {
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.3 }}
-            className="hidden sm:block mt-1 sm:mt-2 text-lg sm:text-xl md:text-2xl font-bold tracking-tight text-gray-800"
+            className={`hidden sm:block mt-1 sm:mt-2 text-lg sm:text-xl md:text-2xl font-bold tracking-tight transition-colors ${
+              isSymbiote ? "text-gray-200" : "text-gray-800"
+            }`}
           >
-            <span className="text-gray-500 mr-2">&gt;</span>
-            <RoleCycler />
+            <span className={isSymbiote ? "text-red-500 mr-2" : "text-gray-500 mr-2"}>
+              &gt;
+            </span>
+            <RoleCycler isSymbiote={isSymbiote} />
           </motion.div>
 
           {/* Description (Desktop / Tablet) */}
@@ -232,15 +303,27 @@ export default function Hero() {
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.4 }}
-            className="hidden sm:block mt-1 sm:mt-2 max-w-[48ch] text-sm sm:text-base md:text-lg leading-relaxed text-gray-800 font-medium"
+            className={`hidden sm:block mt-1 sm:mt-2 max-w-[48ch] text-sm sm:text-base md:text-lg leading-relaxed font-medium transition-colors ${
+              isSymbiote ? "text-gray-300" : "text-gray-800"
+            }`}
           >
             Full-stack developer with production experience across React.js,
             Node.js/Express, and SQL architectures. Founder of{" "}
-            <span className="font-bold text-gray-950 underline decoration-[#a31515] decoration-2 underline-offset-4">
+            <span
+              className={`font-bold underline decoration-2 underline-offset-4 ${
+                isSymbiote
+                  ? "text-white decoration-red-500"
+                  : "text-gray-950 decoration-[#a31515]"
+              }`}
+            >
               Lumen Academy
             </span>{" "}
             and published author in{" "}
-            <span className="font-bold text-gray-950 italic">
+            <span
+              className={`font-bold italic ${
+                isSymbiote ? "text-white" : "text-gray-950"
+              }`}
+            >
               BMC Research Notes (Springer Nature)
             </span>
             .
@@ -255,7 +338,11 @@ export default function Hero() {
           >
             <a
               href="#work"
-              className="w-full max-w-[260px] sm:w-auto inline-flex items-center justify-center rounded-lg border border-[#a31515] bg-[#991414] sm:bg-[#a31515] px-6 sm:px-8 py-3.5 sm:py-3.5 font-sans sm:font-mono text-xs sm:text-sm font-bold uppercase tracking-wider text-white shadow-[0_6px_20px_rgba(163,21,21,0.35)] transition-all duration-300 hover:-translate-y-1 hover:bg-[#7a0f0f] hover:shadow-[0_10px_25px_rgba(163,21,21,0.6)] cursor-pointer text-center"
+              className={`w-full max-w-[260px] sm:w-auto inline-flex items-center justify-center rounded-lg border px-6 sm:px-8 py-3.5 font-sans sm:font-mono text-xs sm:text-sm font-bold uppercase tracking-wider text-white transition-all duration-300 hover:-translate-y-1 cursor-pointer text-center ${
+                isSymbiote
+                  ? "border-red-600 bg-red-600 hover:bg-red-700 shadow-[0_0_20px_rgba(220,38,38,0.45)] hover:shadow-[0_0_25px_rgba(220,38,38,0.7)]"
+                  : "border-[#a31515] bg-[#991414] sm:bg-[#a31515] hover:bg-[#7a0f0f] shadow-[0_6px_20px_rgba(163,21,21,0.35)] hover:shadow-[0_10px_25px_rgba(163,21,21,0.6)]"
+              }`}
             >
               Explore Projects
             </a>
@@ -263,7 +350,11 @@ export default function Hero() {
             <a
               href="/Prince_Albert_Resume.pdf"
               download="Prince_Albert_Resume.pdf"
-              className="group w-full max-w-[260px] sm:w-auto inline-flex items-center justify-center gap-2.5 rounded-lg border border-slate-800/80 bg-[#0e1626] sm:bg-gray-900 px-5 sm:px-6 py-3.5 sm:py-3.5 font-sans sm:font-mono text-xs sm:text-sm font-bold uppercase tracking-wider text-white shadow-md transition-all duration-300 hover:-translate-y-1 hover:bg-black hover:shadow-xl cursor-pointer text-center"
+              className={`group w-full max-w-[260px] sm:w-auto inline-flex items-center justify-center gap-2.5 rounded-lg border px-5 sm:px-6 py-3.5 font-sans sm:font-mono text-xs sm:text-sm font-bold uppercase tracking-wider text-white shadow-md transition-all duration-300 hover:-translate-y-1 cursor-pointer text-center ${
+                isSymbiote
+                  ? "border-gray-700/80 bg-[#121420] hover:bg-[#1b1f32] hover:border-gray-500 shadow-[0_4px_15px_rgba(0,0,0,0.5)]"
+                  : "border-slate-800/80 bg-[#0e1626] sm:bg-gray-900 hover:bg-black hover:shadow-xl"
+              }`}
             >
               <svg
                 className="h-4 w-4 fill-current transition-transform group-hover:scale-110 shrink-0"
@@ -278,31 +369,51 @@ export default function Hero() {
               href="https://github.com/Prince121711"
               target="_blank"
               rel="noopener noreferrer"
-              className="hidden sm:inline-flex items-center justify-center gap-2 rounded-lg border border-gray-300 bg-white/90 backdrop-blur-sm px-4 sm:px-5 py-3 sm:py-3.5 font-mono text-xs sm:text-sm font-bold uppercase tracking-wider text-gray-800 transition-all duration-300 hover:-translate-y-1 hover:border-[#a31515] hover:text-[#a31515] hover:shadow-md cursor-pointer text-center"
+              className={`hidden sm:inline-flex items-center justify-center gap-2 rounded-lg border px-4 sm:px-5 py-3 sm:py-3.5 font-mono text-xs sm:text-sm font-bold uppercase tracking-wider transition-all duration-300 hover:-translate-y-1 hover:shadow-md cursor-pointer text-center ${
+                isSymbiote
+                  ? "border-gray-700/80 bg-[#151825] text-white hover:text-red-400 hover:border-red-500 shadow-sm"
+                  : "border-gray-300 bg-white/90 backdrop-blur-sm text-gray-800 hover:border-[#a31515] hover:text-[#a31515]"
+              }`}
             >
               <span>GitHub ↗</span>
             </a>
           </motion.div>
 
           {/* Location & Hint (Desktop / Tablet) */}
-          <div className="hidden sm:flex mt-3 sm:mt-4 flex-wrap items-center gap-2 sm:gap-4 text-[11px] sm:text-xs font-mono tracking-wider text-gray-600 uppercase">
-            <span>📍 Salem, Tamil Nadu, India</span>
-            <span>•</span>
-            <span className="text-[#a31515] font-semibold animate-pulse">
+          <div className="hidden sm:flex mt-3 sm:mt-4 flex-wrap items-center gap-2 sm:gap-4 text-[11px] sm:text-xs font-mono tracking-wider uppercase">
+            <span className={isSymbiote ? "text-gray-400" : "text-gray-600"}>
+              📍 Salem, Tamil Nadu, India
+            </span>
+            <span className={isSymbiote ? "text-gray-600" : "text-gray-400"}>•</span>
+            <span
+              className={
+                isSymbiote
+                  ? "text-red-400 font-semibold animate-pulse drop-shadow-[0_0_8px_rgba(220,38,38,0.5)]"
+                  : "text-[#a31515] font-semibold animate-pulse"
+              }
+            >
               ⚡ Hover mouse over hero to unmask
             </span>
           </div>
         </div>
 
         {/* Floating Developer Badge at Bottom Right */}
-        <div className="hidden xl:flex absolute bottom-8 right-12 z-30 items-center gap-3 rounded-2xl bg-gray-900/90 backdrop-blur-md border border-red-900/50 px-5 py-3 text-white shadow-[0_8px_25px_rgba(0,0,0,0.35)]">
+        <div
+          className={`hidden xl:flex absolute bottom-8 right-12 z-30 items-center gap-3 rounded-2xl backdrop-blur-md px-5 py-3 text-white transition-all duration-300 ${
+            isSymbiote
+              ? "bg-black/90 border border-red-600/50 shadow-[0_0_20px_rgba(220,38,38,0.3)]"
+              : "bg-gray-900/90 border border-red-900/50 shadow-[0_8px_25px_rgba(0,0,0,0.35)]"
+          }`}
+        >
           <Image
             src="/spiderman/spydy.png"
             alt="Spider badge"
             width={20}
             height={20}
             style={{ width: "auto", height: "auto" }}
-            className="h-5 w-5 object-contain brightness-200"
+            className={`h-5 w-5 object-contain ${
+              isSymbiote ? "brightness-200" : "brightness-150"
+            }`}
           />
           <div>
             <p className="font-mono text-xs font-bold text-red-400 uppercase tracking-wider">
@@ -316,7 +427,11 @@ export default function Hero() {
       </section>
 
       {/* Dual Crossed Slanted Marquee Banners */}
-      <section className="relative w-full h-32 sm:h-40 md:h-48 bg-white overflow-hidden flex items-center justify-center z-40 my-0 sm:my-2">
+      <section
+        className={`relative w-full h-32 sm:h-40 md:h-48 overflow-hidden flex items-center justify-center z-40 my-0 sm:my-2 transition-colors duration-500 ${
+          isSymbiote ? "bg-[#07080c]" : "bg-white"
+        }`}
+      >
         {/* Ribbon 1: Red Ribbon (rotated 3.5deg) */}
         <div className="absolute w-[130vw] -left-[15vw] h-10 sm:h-12 md:h-16 bg-[#a31515] text-white border-y-[3px] border-black rotate-[3.5deg] -translate-y-3 sm:-translate-y-4 md:-translate-y-5 shadow-[0_10px_20px_rgba(0,0,0,0.35)] z-20 flex items-center overflow-hidden">
           <div className="flex items-center h-full w-max animate-marquee">
