@@ -103,25 +103,25 @@ export default function Navbar() {
       <header
         className={`fixed inset-x-0 top-0 z-[60] transition-all duration-300 ${
           scrolled || theme === "symbiote"
-            ? "bg-black/90 backdrop-blur-md border-b border-red-900/50 py-3.5 shadow-[0_4px_30px_rgba(220,38,38,0.18)]"
-            : "bg-transparent border-b border-transparent sm:bg-white/85 sm:backdrop-blur-sm sm:border-gray-200/70 py-4 sm:py-5"
+            ? "bg-black/90 backdrop-blur-md border-b border-red-900/50 py-3 shadow-[0_4px_30px_rgba(220,38,38,0.18)]"
+            : "bg-white/90 backdrop-blur-md border-b border-gray-200/80 py-3 shadow-sm"
         }`}
       >
-        <nav className="mx-auto flex max-w-7xl items-center justify-between px-4 sm:px-6 md:px-12">
+        <nav className="mx-auto flex max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8 gap-4">
           {/* Logo with Spider-Sense Easter Egg trigger */}
-          <div className="relative group">
+          <div className="relative group shrink-0">
             <button
               onClick={handleLogoClick}
               title="Click or press Alt+S for Spider-Sense!"
-              className={`flex items-center text-xl sm:text-2xl font-black italic tracking-tighter uppercase transition-colors text-left cursor-pointer ${
-                scrolled || theme === "symbiote" ? "text-white" : "text-gray-900"
+              className={`flex items-baseline text-xl lg:text-2xl font-black italic tracking-tighter uppercase whitespace-nowrap transition-colors text-left cursor-pointer ${
+                scrolled || theme === "symbiote" ? "text-white" : "text-gray-950"
               }`}
             >
-              <span className="text-red-600 transition-transform duration-300 group-hover:scale-125">
+              <span className="text-red-600 transition-transform duration-300 group-hover:scale-125 mr-0.5">
                 P
               </span>
-              <span className="transition-colors group-hover:text-red-500">
-                RINCE<span className="hidden sm:inline"> ALBERT</span>
+              <span className="transition-colors group-hover:text-red-500 whitespace-nowrap">
+                RINCE ALBERT
                 <span className="text-red-600">.</span>
               </span>
             </button>
@@ -131,7 +131,7 @@ export default function Navbar() {
           </div>
 
           {/* Desktop Nav Links with Active Indicator */}
-          <ul className="hidden items-center gap-8 md:flex">
+          <ul className="hidden items-center gap-4 xl:gap-6 lg:flex">
             {nav.map((item) => {
               const sectionId = item.href.replace("#", "");
               const isActive = activeSection === sectionId;
@@ -140,17 +140,17 @@ export default function Navbar() {
                   <a
                     href={item.href}
                     onClick={() => playClickSound()}
-                    className={`group relative text-xs font-bold uppercase tracking-[0.18em] transition-colors duration-300 ${
+                    className={`group relative text-[11px] xl:text-xs font-bold uppercase tracking-[0.14em] transition-colors duration-300 whitespace-nowrap ${
                       isActive
                         ? "text-red-500 font-extrabold"
-                        : scrolled
+                        : scrolled || theme === "symbiote"
                         ? "text-gray-300 hover:text-white"
                         : "text-gray-700 hover:text-[#a31515]"
                     }`}
                   >
                     {item.label}
                     <span
-                      className={`absolute -bottom-2 left-0 h-[2px] bg-red-600 shadow-[0_0_8px_rgba(220,38,38,0.8)] transition-all duration-300 ease-out ${
+                      className={`absolute -bottom-1.5 left-0 h-[2px] bg-red-600 shadow-[0_0_8px_rgba(220,38,38,0.8)] transition-all duration-300 ease-out ${
                         isActive ? "w-full" : "w-0 group-hover:w-full"
                       }`}
                     />
@@ -161,7 +161,7 @@ export default function Navbar() {
           </ul>
 
           {/* Right Action Buttons & Toggles (Desktop) */}
-          <div className="hidden items-center gap-3 md:flex">
+          <div className="hidden items-center gap-2 xl:gap-2.5 lg:flex shrink-0">
             {/* Symbiote (Black Suit) Theme Toggle Button */}
             <button
               onClick={handleThemeToggle}
@@ -170,17 +170,17 @@ export default function Navbar() {
                   ? "Switch to Classic Red Suit (Light)"
                   : "Bond with Symbiote (Black Suit Mode)"
               }
-              className={`flex items-center gap-1.5 rounded-lg border px-2.5 py-2 font-mono text-xs font-bold uppercase tracking-wider transition-all duration-300 cursor-pointer ${
+              className={`flex h-9 items-center gap-1.5 rounded-lg border px-3 font-mono text-xs font-bold uppercase tracking-wider transition-all duration-300 cursor-pointer shrink-0 ${
                 theme === "symbiote"
-                  ? "border-red-600/80 bg-red-950/50 text-red-200 shadow-[0_0_15px_rgba(220,38,38,0.4)] hover:border-red-500"
+                  ? "border-red-600/80 bg-red-950/50 text-red-200 shadow-[0_0_15px_rgba(220,38,38,0.35)] hover:border-red-500"
                   : scrolled
                   ? "border-gray-700 text-gray-300 hover:text-white hover:border-gray-500"
-                  : "border-gray-300 text-gray-700 hover:text-[#a31515] hover:border-[#a31515]"
+                  : "border-gray-300 text-gray-700 hover:text-[#a31515] hover:border-[#a31515] bg-white/70"
               }`}
             >
               <span className="text-sm">{theme === "symbiote" ? "🕸️" : "🕷️"}</span>
-              <span className="text-[10px] hidden lg:inline">
-                {theme === "symbiote" ? "Symbiote" : "Classic Suit"}
+              <span className="text-[11px] whitespace-nowrap">
+                {theme === "symbiote" ? "Symbiote" : "Classic"}
               </span>
             </button>
 
@@ -188,37 +188,22 @@ export default function Navbar() {
             <button
               onClick={toggleSound}
               title={soundOn ? "Mute Spider-Man Audio" : "Enable Spider-Man Audio"}
-              className={`flex items-center gap-1.5 rounded-lg border px-2.5 py-2 font-mono text-xs font-bold uppercase tracking-wider transition-all duration-300 cursor-pointer ${
+              className={`flex h-9 w-9 items-center justify-center rounded-lg border font-mono text-xs font-bold uppercase tracking-wider transition-all duration-300 cursor-pointer shrink-0 ${
                 soundOn
                   ? "border-[#a31515] bg-[#a31515]/10 text-red-500 shadow-[0_0_12px_rgba(220,38,38,0.3)] animate-pulse"
-                  : scrolled
+                  : scrolled || theme === "symbiote"
                   ? "border-gray-700 text-gray-400 hover:text-white hover:border-gray-500"
-                  : "border-gray-300 text-gray-600 hover:text-gray-900 hover:border-gray-400"
+                  : "border-gray-300 text-gray-600 hover:text-gray-900 hover:border-gray-400 bg-white/70"
               }`}
             >
-              <span>{soundOn ? "🔊" : "🔇"}</span>
-              <span className="text-[10px] hidden lg:inline">{soundOn ? "Audio ON" : "Audio OFF"}</span>
+              <span className="text-sm">{soundOn ? "🔊" : "🔇"}</span>
             </button>
-
-            {/* Quick Resume Link */}
-            <a
-              href="/Prince_Albert_Resume.pdf"
-              download="Prince_Albert_Resume.pdf"
-              className={`hidden xl:inline-flex items-center gap-1.5 rounded-lg border px-3 py-2 font-mono text-xs font-bold uppercase tracking-wider transition-all duration-300 cursor-pointer ${
-                scrolled
-                  ? "border-gray-700 text-gray-300 hover:text-white hover:border-gray-500"
-                  : "border-gray-300 text-gray-700 hover:text-[#a31515] hover:border-[#a31515]"
-              }`}
-            >
-              <span>Resume</span>
-              <span className="text-red-500 font-black">↓</span>
-            </a>
 
             {/* Get In Touch CTA */}
             <a
               href="#contact"
               onClick={() => playClickSound()}
-              className="inline-flex items-center gap-2 rounded-lg border border-[#a31515] bg-[#a31515] px-4 py-2 font-mono text-xs font-bold uppercase tracking-wider text-white shadow-[0_4px_15px_rgba(163,21,21,0.35)] transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#7a0f0f] hover:shadow-[0_6px_20px_rgba(163,21,21,0.55)] cursor-pointer"
+              className="inline-flex h-9 items-center gap-1.5 xl:gap-2 rounded-lg border border-[#a31515] bg-[#a31515] px-3.5 xl:px-4 font-mono text-xs font-bold uppercase tracking-wider text-white shadow-[0_4px_15px_rgba(163,21,21,0.35)] transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#7a0f0f] hover:shadow-[0_6px_20px_rgba(163,21,21,0.55)] cursor-pointer whitespace-nowrap shrink-0"
             >
               <Image
                 src="/spiderman/spydy.png"
@@ -232,8 +217,8 @@ export default function Navbar() {
             </a>
           </div>
 
-          {/* Mobile Clean Hamburger control (matches screenshot) */}
-          <div className="flex items-center md:hidden">
+          {/* Mobile Clean Hamburger control */}
+          <div className="flex items-center lg:hidden">
             <button
               aria-label={menuOpen ? "Close menu" : "Open menu"}
               aria-expanded={menuOpen}
@@ -277,7 +262,7 @@ export default function Navbar() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.3 }}
-            className="fixed inset-0 z-[55] flex flex-col justify-between bg-black/95 px-6 sm:px-8 pb-8 pt-24 backdrop-blur-xl md:hidden overflow-y-auto gap-8"
+            className="fixed inset-0 z-[55] flex flex-col justify-between bg-black/95 px-6 sm:px-8 pb-8 pt-24 backdrop-blur-xl lg:hidden overflow-y-auto gap-8"
           >
             {/* Background spider web decoration */}
             <div className="pointer-events-none absolute right-0 top-0 -translate-y-1/4 translate-x-1/4 opacity-20">
