@@ -1,16 +1,23 @@
 "use client";
 
 import { useState } from "react";
-import { motion } from "framer-motion";
 import Image from "next/image";
-import { contactEmail, contactPhone, contactLocation, social } from "@/lib/data";
+import { contactEmail, contactPhone, contactLocation } from "@/lib/data";
 import { playClickSound, playSuccessSound } from "@/lib/soundEffects";
+
+type FormStatus = "idle" | "submitting" | "success" | "fallback";
 
 export default function Contact() {
   const [copiedEmail, setCopiedEmail] = useState(false);
   const [copiedPhone, setCopiedPhone] = useState(false);
-  const [submitted, setSubmitted] = useState(false);
-  const [formData, setFormData] = useState({ name: "", email: "", message: "" });
+  const [status, setStatus] = useState<FormStatus>("idle");
+  const [errorMessage, setErrorMessage] = useState("");
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    message: "",
+    botcheck: "",
+  });
 
   const copyEmail = async () => {
     playClickSound();
@@ -34,20 +41,52 @@ export default function Contact() {
     }
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const getMailtoUrl = () => {
+    const subject = encodeURIComponent(
+      `Portfolio Inquiry from ${formData.name || "Colleague"}`
+    );
+    const body = encodeURIComponent(
+      `Hi Prince,\n\n${formData.message}\n\nFrom,\n${formData.name}\nEmail: ${formData.email}`
+    );
+    return `mailto:${contactEmail}?subject=${subject}&body=${body}`;
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setSubmitted(true);
-    playSuccessSound();
-    setTimeout(() => {
-      setSubmitted(false);
-      setFormData({ name: "", email: "", message: "" });
-    }, 4500);
+    setStatus("submitting");
+    setErrorMessage("");
+
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await res.json();
+
+      if (data.success) {
+        setStatus("success");
+        playSuccessSound();
+        setFormData({ name: "", email: "", message: "", botcheck: "" });
+      } else if (data.noKeyConfigured) {
+        // No server API key configured yet - offer graceful 1-click mailto fallback
+        setStatus("fallback");
+        playSuccessSound();
+      } else {
+        setErrorMessage(data.error || "Failed to deliver message via web gateway.");
+        setStatus("fallback");
+      }
+    } catch {
+      setErrorMessage("Network connection issue. You can send your message directly via email.");
+      setStatus("fallback");
+    }
   };
 
   return (
     <section
       id="contact"
-      className="relative w-full border-t border-gray-200 bg-surface px-4 sm:px-6 md:px-12 py-16 sm:py-20 md:py-28 overflow-hidden"
+      className="relative w-full border-t border-gray-200 bg-surface px-4 sm:px-6 md:px-12 py-16 sm:py-20 md:py-28 overflow-hidden transition-colors"
     >
       {/* Hanging Spider-Man from top right */}
       <div className="absolute top-0 right-2 sm:right-6 md:right-24 z-30 pointer-events-none flex flex-col items-center animate-swing origin-top">
@@ -87,21 +126,67 @@ export default function Contact() {
         {/* Content Grid */}
         <div className="w-full grid grid-cols-1 lg:grid-cols-[1.1fr_0.9fr] gap-6 sm:gap-8 z-10">
           {/* Left Column: Form Card */}
-          <div className="w-full bg-white/95 backdrop-blur-sm border border-gray-200 p-5 sm:p-7 md:p-8 rounded-2xl shadow-sm relative overflow-hidden">
-            {submitted ? (
+          <div className="w-full bg-white/95 backdrop-blur-sm border border-gray-200 p-5 sm:p-7 md:p-8 rounded-2xl shadow-sm relative overflow-hidden transition-colors">
+            {status === "success" ? (
               <div className="py-12 sm:py-16 flex flex-col items-center text-center">
-                <div className="w-12 h-12 sm:w-14 sm:h-14 bg-[#a31515] text-white rounded-full flex items-center justify-center text-xl sm:text-2xl font-black mb-4 shadow-lg animate-bounce">
+                <div className="w-14 h-14 bg-[#a31515] text-white rounded-full flex items-center justify-center text-2xl font-black mb-4 shadow-lg animate-bounce">
                   ✓
                 </div>
                 <h3 className="text-xl sm:text-2xl font-black uppercase tracking-tight text-gray-900 mb-2">
-                  Message Sent!
+                  Spider-Signal Received!
                 </h3>
-                <p className="text-xs sm:text-sm text-gray-600 font-medium max-w-[36ch]">
-                  Thanks for reaching out! Prince Albert will respond as soon as your spider-signal arrives.
+                <p className="text-xs sm:text-sm text-gray-600 font-medium max-w-[40ch] mb-6">
+                  Thank you for reaching out! Your message was delivered straight to Prince Albert&apos;s inbox.
                 </p>
+                <button
+                  onClick={() => setStatus("idle")}
+                  className="rounded-xl border border-gray-300 bg-white hover:border-[#a31515] hover:text-[#a31515] px-5 py-2.5 font-mono text-xs font-bold uppercase tracking-wider transition-all"
+                >
+                  Send Another Message
+                </button>
+              </div>
+            ) : status === "fallback" ? (
+              <div className="py-8 sm:py-10 flex flex-col items-center text-center">
+                <div className="w-12 h-12 bg-amber-500/20 text-amber-600 border border-amber-500/30 rounded-full flex items-center justify-center text-xl font-black mb-3">
+                  ✉️
+                </div>
+                <h3 className="text-lg sm:text-xl font-black uppercase tracking-tight text-gray-900 mb-1.5">
+                  Direct Email Launch
+                </h3>
+                <p className="text-xs sm:text-sm text-gray-600 font-medium max-w-[42ch] mb-5">
+                  {errorMessage || "Click below to dispatch your message directly via your email client to Prince Albert."}
+                </p>
+                <div className="flex flex-col sm:flex-row gap-3 w-full max-w-sm">
+                  <a
+                    href={getMailtoUrl()}
+                    className="flex-1 py-3 px-4 bg-[#a31515] hover:bg-[#7a0f0f] text-white rounded-xl font-bold uppercase tracking-wider text-xs font-mono shadow-md text-center transition-all"
+                  >
+                    Open Email App ↗
+                  </a>
+                  <button
+                    type="button"
+                    onClick={() => setStatus("idle")}
+                    className="py-3 px-4 rounded-xl border border-gray-300 font-mono text-xs font-bold uppercase tracking-wider text-gray-700 hover:text-black transition-all"
+                  >
+                    Back to Form
+                  </button>
+                </div>
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="flex flex-col gap-4 sm:gap-5">
+                {/* Honeypot field for bot suppression */}
+                <input
+                  type="text"
+                  name="botcheck"
+                  value={formData.botcheck}
+                  onChange={(e) =>
+                    setFormData({ ...formData, botcheck: e.target.value })
+                  }
+                  className="hidden"
+                  tabIndex={-1}
+                  autoComplete="off"
+                />
+
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5 sm:gap-4">
                   <div className="flex flex-col gap-1 sm:gap-1.5">
                     <label className="text-[11px] sm:text-xs font-bold uppercase tracking-wider text-gray-600">
@@ -154,9 +239,21 @@ export default function Contact() {
 
                 <button
                   type="submit"
-                  className="mt-1 sm:mt-2 w-full py-3 sm:py-3.5 bg-[#a31515] hover:bg-[#7a0f0f] text-white rounded-xl font-bold uppercase tracking-wider text-xs md:text-sm transition-all duration-300 shadow-[0_6px_20px_rgba(163,21,21,0.35)] hover:shadow-[0_10px_25px_rgba(163,21,21,0.5)] cursor-pointer hover:-translate-y-0.5 text-center"
+                  disabled={status === "submitting"}
+                  className={`mt-1 sm:mt-2 w-full py-3 sm:py-3.5 rounded-xl font-bold uppercase tracking-wider text-xs md:text-sm transition-all duration-300 shadow-[0_6px_20px_rgba(163,21,21,0.35)] hover:shadow-[0_10px_25px_rgba(163,21,21,0.5)] cursor-pointer hover:-translate-y-0.5 text-center flex items-center justify-center gap-2 ${
+                    status === "submitting"
+                      ? "bg-[#7a0f0f] text-white opacity-80 cursor-wait"
+                      : "bg-[#a31515] hover:bg-[#7a0f0f] text-white"
+                  }`}
                 >
-                  Shoot Web &amp; Send Message
+                  {status === "submitting" ? (
+                    <>
+                      <span className="animate-spin inline-block">🕸️</span>
+                      <span>Shooting Web &amp; Delivering...</span>
+                    </>
+                  ) : (
+                    <span>Shoot Web &amp; Send Message</span>
+                  )}
                 </button>
               </form>
             )}

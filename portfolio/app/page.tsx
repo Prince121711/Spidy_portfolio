@@ -8,6 +8,7 @@ import Certifications from "@/components/Certifications";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 import SpiderInteractions from "@/components/SpiderInteractions";
+import BackToTop from "@/components/BackToTop";
 
 export default function Home() {
   return (
@@ -22,6 +23,7 @@ export default function Home() {
       <Certifications />
       <Contact />
       <Footer />
+      <BackToTop />
     </main>
   );
 }

@@ -171,3 +171,72 @@ export function playSuccessSound() {
     // Audio blocked
   }
 }
+
+// 5. Symbiote Suit / Black Suit Transformation Sound
+export function playSymbioteSound(toSymbiote: boolean) {
+  if (!soundEnabled || !audioCtx) return;
+  try {
+    initAudio();
+    const ctx = audioCtx;
+    const now = ctx.currentTime;
+
+    if (toSymbiote) {
+      // Dark Symbiote transformation sound: deep resonating drop & dark frequency surge
+      const subOsc = ctx.createOscillator();
+      const subGain = ctx.createGain();
+      subOsc.type = "sawtooth";
+      subOsc.frequency.setValueAtTime(180, now);
+      subOsc.frequency.exponentialRampToValueAtTime(45, now + 0.35);
+
+      const filter = ctx.createBiquadFilter();
+      filter.type = "lowpass";
+      filter.frequency.setValueAtTime(800, now);
+      filter.frequency.exponentialRampToValueAtTime(120, now + 0.35);
+      filter.Q.setValueAtTime(6, now);
+
+      subGain.gain.setValueAtTime(0.2, now);
+      subGain.gain.exponentialRampToValueAtTime(0.001, now + 0.45);
+
+      subOsc.connect(filter);
+      filter.connect(subGain);
+      subGain.connect(ctx.destination);
+
+      subOsc.start(now);
+      subOsc.stop(now + 0.45);
+
+      // Atmospheric hiss
+      const bufferSize = ctx.sampleRate * 0.2;
+      const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
+      const data = buffer.getChannelData(0);
+      for (let i = 0; i < bufferSize; i++) {
+        data[i] = Math.random() * 2 - 1;
+      }
+      const noise = ctx.createBufferSource();
+      noise.buffer = buffer;
+      const noiseGain = ctx.createGain();
+      noiseGain.gain.setValueAtTime(0.08, now);
+      noiseGain.gain.exponentialRampToValueAtTime(0.001, now + 0.2);
+      noise.connect(noiseGain);
+      noiseGain.connect(ctx.destination);
+      noise.start(now);
+    } else {
+      // Classic Suit return: heroic, bright chime
+      const heroicNotes = [440, 554.37, 659.25, 880]; // A4, C#5, E5, A5
+      heroicNotes.forEach((freq, idx) => {
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = "triangle";
+        osc.frequency.setValueAtTime(freq, now + idx * 0.04);
+        gain.gain.setValueAtTime(0.1, now + idx * 0.04);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + idx * 0.04 + 0.4);
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start(now + idx * 0.04);
+        osc.stop(now + idx * 0.04 + 0.45);
+      });
+    }
+  } catch {
+    // Audio blocked
+  }
+}
+

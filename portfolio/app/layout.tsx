@@ -25,6 +25,7 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "https://prince-albert.dev"),
   title: "Prince Albert — Full Stack Developer & AI Researcher",
   description:
     "Portfolio of Prince Albert — full-stack developer with production experience across React.js, Node.js/Express, and SQL. Founder of Lumen Academy and published author in BMC Research Notes (Springer Nature).",
@@ -41,17 +42,26 @@ export const metadata: Metadata = {
     shortcut: "/favicon.ico",
   },
   openGraph: {
-    title: "Prince Albert — Full Stack Developer",
+    title: "Prince Albert — Full Stack Developer & AI Researcher",
     description:
       "Full-stack developer across React.js, Node.js, Express, and SQL. Founder of Lumen Academy, published author in BMC Research Notes (Springer Nature).",
     type: "website",
     locale: "en_US",
+    images: [
+      {
+        url: "/spiderman/image-1.png",
+        width: 1200,
+        height: 630,
+        alt: "Prince Albert Portfolio",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Prince Albert — Full Stack Developer",
+    title: "Prince Albert — Full Stack Developer & AI Researcher",
     description:
       "Full-stack developer across React.js, Node.js, Express, and SQL. Founder of Lumen Academy, published author in BMC Research Notes (Springer Nature).",
+    images: ["/spiderman/image-1.png"],
   },
 };
 
@@ -61,11 +71,31 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${outfit.variable} ${jetbrains.variable}`}>
+    <html
+      lang="en"
+      suppressHydrationWarning
+      className={`${outfit.variable} ${jetbrains.variable}`}
+    >
       <head>
         <link rel="icon" href="/favicon.ico" sizes="any" />
         <link rel="icon" href="/favicon.png" type="image/png" />
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function() {
+                try {
+                  var saved = localStorage.getItem('spider-theme');
+                  if (saved === 'symbiote' || (!saved && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                    document.documentElement.classList.add('dark', 'symbiote');
+                  } else {
+                    document.documentElement.classList.remove('dark', 'symbiote');
+                  }
+                } catch(e) {}
+              })();
+            `,
+          }}
+        />
       </head>
       <body className="font-sans antialiased selection:bg-[#a31515] selection:text-white">
         {children}

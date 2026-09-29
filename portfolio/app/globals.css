@@ -6,6 +6,11 @@
   color-scheme: light;
 }
 
+html.dark,
+html.symbiote {
+  color-scheme: dark;
+}
+
 html {
   scroll-behavior: smooth;
 }
@@ -28,6 +33,7 @@ body {
   background-color: #fafafa;
   color: #111111;
   overflow-x: hidden;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 ::selection {
@@ -68,3 +74,195 @@ body {
     cursor: pointer;
   }
 }
+
+/* =========================================================
+   SYMBIOTE (BLACK SUIT) DARK MODE THEME SYSTEM
+   ========================================================= */
+
+html.dark body,
+html.symbiote body {
+  background-color: #07080c;
+  color: #f3f4f6;
+}
+
+/* Dark mode selection */
+html.dark ::selection,
+html.symbiote ::selection {
+  background-color: #dc2626;
+  color: #ffffff;
+}
+
+/* Dark mode scrollbars */
+html.dark ::-webkit-scrollbar-track,
+html.symbiote ::-webkit-scrollbar-track {
+  background: #07080c;
+}
+html.dark ::-webkit-scrollbar-thumb,
+html.symbiote ::-webkit-scrollbar-thumb {
+  background: #27272a;
+}
+html.dark ::-webkit-scrollbar-thumb:hover,
+html.symbiote ::-webkit-scrollbar-thumb:hover {
+  background: #3f3f46;
+}
+
+/* Surface backgrounds */
+html.dark .bg-surface,
+html.symbiote .bg-surface {
+  background-color: #0b0c12 !important;
+}
+
+html.dark .bg-white,
+html.symbiote .bg-white {
+  background-color: #10121a !important;
+}
+
+html.dark .bg-white\/95,
+html.symbiote .bg-white\/95 {
+  background-color: rgba(16, 18, 26, 0.95) !important;
+}
+
+html.dark .bg-white\/90,
+html.symbiote .bg-white\/90 {
+  background-color: rgba(16, 18, 26, 0.9) !important;
+}
+
+html.dark .bg-white\/80,
+html.symbiote .bg-white\/80 {
+  background-color: rgba(16, 18, 26, 0.8) !important;
+}
+
+html.dark .bg-white\/85,
+html.symbiote .bg-white\/85 {
+  background-color: rgba(16, 18, 26, 0.85) !important;
+}
+
+html.dark .bg-gray-50,
+html.symbiote .bg-gray-50 {
+  background-color: #151724 !important;
+}
+
+html.dark .bg-gray-50\/90,
+html.symbiote .bg-gray-50\/90 {
+  background-color: rgba(21, 23, 36, 0.9) !important;
+}
+
+html.dark .bg-gray-50\/80,
+html.symbiote .bg-gray-50\/80 {
+  background-color: rgba(21, 23, 36, 0.8) !important;
+}
+
+html.dark .bg-gray-100,
+html.symbiote .bg-gray-100 {
+  background-color: rgba(255, 255, 255, 0.08) !important;
+  color: #e4e4e7 !important;
+}
+
+html.dark .bg-red-50,
+html.symbiote .bg-red-50 {
+  background-color: rgba(163, 21, 21, 0.16) !important;
+  border-color: rgba(220, 38, 38, 0.25) !important;
+}
+
+/* Borders */
+html.dark .border-gray-200,
+html.symbiote .border-gray-200 {
+  border-color: rgba(255, 255, 255, 0.09) !important;
+}
+
+html.dark .border-gray-200\/80,
+html.symbiote .border-gray-200\/80,
+html.dark .border-gray-200\/70,
+html.symbiote .border-gray-200\/70 {
+  border-color: rgba(255, 255, 255, 0.07) !important;
+}
+
+html.dark .border-gray-200\/90,
+html.symbiote .border-gray-200\/90 {
+  border-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+html.dark .border-gray-300,
+html.symbiote .border-gray-300 {
+  border-color: rgba(255, 255, 255, 0.15) !important;
+}
+
+/* Text colors */
+html.dark .text-gray-950,
+html.symbiote .text-gray-950,
+html.dark .text-gray-900,
+html.symbiote .text-gray-900 {
+  color: #fafafa !important;
+}
+
+html.dark .text-gray-800,
+html.symbiote .text-gray-800,
+html.dark .text-gray-700,
+html.symbiote .text-gray-700 {
+  color: #d4d4d8 !important;
+}
+
+html.dark .text-gray-600,
+html.symbiote .text-gray-600 {
+  color: #a1a1aa !important;
+}
+
+html.dark .text-gray-500,
+html.symbiote .text-gray-500 {
+  color: #71717a !important;
+}
+
+/* Form input elements in dark mode */
+html.dark input,
+html.symbiote input,
+html.dark textarea,
+html.symbiote textarea {
+  background-color: #141622 !important;
+  border-color: rgba(255, 255, 255, 0.12) !important;
+  color: #ffffff !important;
+}
+
+html.dark input::placeholder,
+html.symbiote input::placeholder,
+html.dark textarea::placeholder,
+html.symbiote textarea::placeholder {
+  color: #71717a !important;
+}
+
+/* Webs overlay: invert and blend screen for glowing silver webs */
+html.dark .mix-blend-multiply,
+html.symbiote .mix-blend-multiply {
+  mix-blend-mode: screen !important;
+  filter: invert(1) brightness(1.25) contrast(1.1);
+  opacity: 0.25 !important;
+}
+
+/* Card hover glow in Symbiote mode */
+html.dark .hover\:shadow-\[0_12px_30px_rgba\(163\,21\,21\,0\.2\)\]:hover,
+html.symbiote .hover\:shadow-\[0_12px_30px_rgba\(163\,21\,21\,0\.2\)\]:hover {
+  box-shadow: 0 12px 35px rgba(220, 38, 38, 0.25) !important;
+}
+
+/* Hero section contrast preservation over studio backdrop */
+html.dark #top .text-gray-950,
+html.symbiote #top .text-gray-950 {
+  color: #030712 !important;
+}
+
+html.dark #top .text-gray-800,
+html.symbiote #top .text-gray-800 {
+  color: #1f2937 !important;
+}
+
+html.dark #top .text-gray-600,
+html.symbiote #top .text-gray-600 {
+  color: #4b5563 !important;
+}
+
+html.dark #top .mix-blend-multiply,
+html.symbiote #top .mix-blend-multiply {
+  mix-blend-mode: multiply !important;
+  filter: none !important;
+  opacity: 0.42 !important;
+}
+
